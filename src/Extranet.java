@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,12 +8,20 @@ import java.util.Scanner;
 public class Extranet {
 
     private static String currentUserName;
+    private static BigInteger moneyATM;
     private static boolean isAdmin = false;
 
     public static String getCurrentUserName() {
         return currentUserName;
     }
 
+    public static BigInteger getMoneyATM() {
+        return moneyATM;
+    }
+
+    public static void setMoneyATM(BigInteger moneyATM) {
+        Extranet.moneyATM = moneyATM;
+    }
 
     public static boolean getIsAdmin() {
         return isAdmin;
