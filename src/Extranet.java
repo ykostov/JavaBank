@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +20,7 @@ public class Extranet {
 
 
 
-    public static void login(Database newdb)
-    {
+    public static void login(Database newdb) throws IOException {
         String usernameInput;
         String passwdInput;
         Scanner scan = new Scanner(System.in);
@@ -38,7 +38,7 @@ public class Extranet {
                 System.out.println("You have logged in successfully");
                 // creation of new client dir.
                 try {
-                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput + "/info.txt");
+                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
                     Files.createDirectories(path);
                     currentUserName = usernameInput;
 
@@ -76,7 +76,7 @@ public class Extranet {
                 {
                     newdb.addData(usernameInput, passwdInput, emailInput);
                     // creation of new client dir.
-                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput + "/info.txt");
+                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
                     Files.createDirectories(path);
                     currentUserName = usernameInput;
                     Menu.mainMenu();
