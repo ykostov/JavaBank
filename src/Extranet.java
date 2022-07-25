@@ -35,16 +35,18 @@ public class Extranet {
         Scanner scan = new Scanner(System.in);
 
         while(true) {
-            System.out.println("Enter username, then password");
+
+            System.out.print(Message.USERNAME);
             usernameInput = scan.nextLine();
             if (usernameInput.startsWith("stop"))
             {
                 break;
             }
+            System.out.print(Message.PASSWD);
             passwdInput = scan.nextLine();
 
             if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
-                System.out.println("You have logged in successfully");
+                System.out.println(Message.SUCCESSLOGIN);
                 // creation of new client dir.
                 try {
                     Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
@@ -59,7 +61,7 @@ public class Extranet {
                 break;
             }
             else {
-                System.out.println("Incorrect password, try again or enter 'stop'");
+                System.out.println(Message.NOSUCCESSLOGIN);
             }
         }
     }
@@ -70,15 +72,15 @@ public class Extranet {
         Scanner scan = new Scanner(System.in);
         while(true)
         {
-            System.out.print("Enter username: ");
+            System.out.print(Message.USERNAME);
             String usernameInput = scan.nextLine();
-            System.out.print("Enter password: ");
+            System.out.print(Message.PASSWD);
             String passwdInput = scan.nextLine();
-            System.out.print("Enter email: ");
+            System.out.print(Message.EMAIL);
             String emailInput = scan.nextLine();
 
             if ((newdb.checkUsername(usernameInput))) {
-                System.out.println("Username is already taken, try again");
+                System.out.println(Message.TAKEN);
             } else {
 
                 try
@@ -88,7 +90,9 @@ public class Extranet {
                     Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
                     Files.createDirectories(path);
                     currentUserName = usernameInput;
+                    System.out.println(Message.SUCCESSREGISTER);
                     Menu.mainMenu();
+                    break;
                 }
                 catch (Exception e)
                 {
@@ -96,6 +100,7 @@ public class Extranet {
                 }
 
             }
+
         }
     }
 }
