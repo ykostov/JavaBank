@@ -1,15 +1,24 @@
 import java.util.Scanner;
 
-public class Account {
+public class Extranet {
 
     private static String username;
+    private static String currentUserName;
+    private static boolean isAdmin = false;
+
+    public static String getCurrentUserName() {
+        return currentUserName;
+    }
 
     public static String getUsername() {
         return username;
     }
+    public static boolean getIsAdmin() {
+        return isAdmin;
+    }
 
     public static void setUsername(String username) {
-        Account.username = username;
+        Extranet.username = username;
     }
 
     public static void login(Database newdb)
@@ -54,6 +63,7 @@ public class Account {
                 System.out.println("Username is already taken, try again");
             } else {
                 newdb.addData(usernameInput, passwdInput, emailInput);
+                currentUserName = usernameInput;
                 break;
             }
         }
