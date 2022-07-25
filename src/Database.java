@@ -5,7 +5,11 @@ import java.util.List;
 
 public class Database {
 
-    String nameOfDb;
+    private String nameOfDb;
+
+    public String getNameOfDb() {
+        return nameOfDb;
+    }
 
     public Database(String nameOfDb) {
         this.nameOfDb = nameOfDb;
@@ -49,9 +53,11 @@ public class Database {
             e.getStackTrace();
         }
 
+        System.out.println("User is successfully registered");
+
     }
 
-    public boolean checkData(String username, String passwd) {
+    public boolean checkUsernameAndPassword(String username, String passwd) {
 
         try
         {
@@ -72,7 +78,28 @@ public class Database {
 
         return false;
 
+    }
 
+    public boolean checkUsername(String username) {
+
+        try
+        {
+            String customPatternForSearchingInDbForUserName = "Username:" + username + "Password:";
+            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
+
+            for (String line : lines) {
+                if (line.contains(customPatternForSearchingInDbForUserName)) {
+                    //there is a user
+                    return true;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            //write data in logger
+        }
+
+        return false;
 
     }
 
