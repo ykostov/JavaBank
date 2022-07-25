@@ -2,13 +2,17 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Database {
 
+    private String nameOfDb;
 
-    public Database() {
+    public String getNameOfDb() {
+        return nameOfDb;
+    }
 
+    public Database(String nameOfDb) {
+        this.nameOfDb = nameOfDb;
     }
 
     public void createDb()
@@ -16,13 +20,13 @@ public class Database {
         // checking if database.txt exists.
 
         try {
-            FileReader fr = new FileReader("database.txt");
+            FileReader fr = new FileReader(nameOfDb + ".txt");
             System.out.println("file exists");
         }
         catch (FileNotFoundException e) {
             try
             {
-                FileWriter fr = new FileWriter("database.txt");
+                FileWriter fr = new FileWriter(nameOfDb + ".txt");
                 System.out.println("file created");
             }
             catch (Exception ex)
@@ -40,7 +44,7 @@ public class Database {
 
         try {
             // Creates a Writer using FileWriter
-            Writer output = new FileWriter("database.txt", true);
+            Writer output = new FileWriter(nameOfDb + ".txt", true);
             output.write(dataToBeWritten);
             output.close();
         }
@@ -49,20 +53,21 @@ public class Database {
             e.getStackTrace();
         }
 
+        System.out.println("User is successfully registered");
+
     }
 
-    public void checkData(String username, String passwd) throws IOException {
-        boolean userFound = false;
+    public boolean checkUsernameAndPassword(String username, String passwd) {
 
         try
         {
             String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd + "Email";
-            List<String> lines = Files.readAllLines(Path.of("database.txt"));
+            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
+
             for (String line : lines) {
                 if (line.contains(customPatternForSearchingInDb)) {
-                    System.out.println("there is a user with that password");
-                    userFound = true;
-                    break;
+                    //there is a user
+                    return true;
                 }
             }
         }
@@ -71,11 +76,30 @@ public class Database {
             //write data in logger
         }
 
-        if (!userFound)
+        return false;
+
+    }
+
+    public boolean checkUsername(String username) {
+
+        try
         {
-            System.out.println("there is NO user with that password");
+            String customPatternForSearchingInDbForUserName = "Username:" + username + "Password:";
+            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
+
+            for (String line : lines) {
+                if (line.contains(customPatternForSearchingInDbForUserName)) {
+                    //there is a user
+                    return true;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            //write data in logger
         }
 
+        return false;
 
     }
 
