@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,7 +55,7 @@ public class Account {
                   listAccounts();
 
               } else if (userInput.startsWith("create")) {
-
+                  createAccount();
               } else if (userInput.startsWith("exit")) {
                   break;
               }
@@ -69,7 +70,29 @@ public class Account {
             List<String> accounts = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ i + ".txt"));
             System.out.println(accounts);
         }
+    }
+    private void createAccount() throws IOException {
+        if (fileCount >= 3)
+        {
+            System.out.println("cannot create more accounts. You must delete one or become a VIP client.");
+        }
+        else
+        {
+            int additionOutsideString = fileCount + 1;
+            try
+            {
+            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ additionOutsideString + ".txt");
+            fileCount++;
+            System.out.println("Account created successfully");
+            }catch (Exception ex)
+            {
+                // write data to logger
+            }
+
+
+        }
 
     }
+
 
 }
