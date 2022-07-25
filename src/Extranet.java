@@ -1,8 +1,10 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Extranet {
 
-    private static String username;
     private static String currentUserName;
     private static boolean isAdmin = false;
 
@@ -10,16 +12,12 @@ public class Extranet {
         return currentUserName;
     }
 
-    public static String getUsername() {
-        return username;
-    }
+
     public static boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public static void setUsername(String username) {
-        Extranet.username = username;
-    }
+
 
     public static void login(Database newdb)
     {
@@ -38,6 +36,17 @@ public class Extranet {
 
             if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
                 System.out.println("You have logged in successfully");
+                // creation of new client dir.
+                try {
+                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput + "/info.txt");
+                    Files.createDirectories(path);
+                    currentUserName = usernameInput;
+
+                } catch (Exception e)
+                {
+                    System.err.println("Failed to create directory!" + e.getMessage());
+                }
+                Menu.mainMenu();
                 break;
             }
             else {
@@ -62,9 +71,21 @@ public class Extranet {
             if ((newdb.checkUsername(usernameInput))) {
                 System.out.println("Username is already taken, try again");
             } else {
-                newdb.addData(usernameInput, passwdInput, emailInput);
-                currentUserName = usernameInput;
-                break;
+
+                try
+                {
+                    newdb.addData(usernameInput, passwdInput, emailInput);
+                    // creation of new client dir.
+                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput + "/info.txt");
+                    Files.createDirectories(path);
+                    currentUserName = usernameInput;
+                    Menu.mainMenu();
+                }
+                catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
+
             }
         }
     }
