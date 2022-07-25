@@ -51,14 +51,9 @@ public class Account {
               Scanner scan = new Scanner(System.in);
               userInput = scan.nextLine();
 
-              if (userInput.startsWith("list")) {
-                  listAccounts();
-
-              } else if (userInput.startsWith("create")) {
-                  createAccount();
-              } else if (userInput.startsWith("exit")) {
-                  break;
-              }
+              if (userInput.startsWith("list")) { listAccounts(); }
+              else if (userInput.startsWith("create")) { createAccount(); }
+              else if (userInput.startsWith("exit")) { break; }
             }
         }
 
@@ -78,10 +73,10 @@ public class Account {
         }
         else
         {
-            int additionOutsideString = fileCount + 1;
+            if (fileCount == 0) { fileCount = 1; }
             try
             {
-            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ additionOutsideString + ".txt");
+            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ fileCount + ".txt");
             fileCount++;
             System.out.println("Account created successfully");
             }catch (Exception ex)
