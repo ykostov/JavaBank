@@ -5,14 +5,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Database {
-    private String name;
-    private String passwd;
-    private String email;
 
-    public Database(String name, String passwd, String email) {
-        this.name = name;
-        this.passwd = passwd;
-        this.email = email;
+
+    public Database() {
+
     }
 
     public void createDb()
@@ -37,34 +33,36 @@ public class Database {
         }
     }
 
-    public void addData() {
-
+    public void addData(String username, String passwd, String email) {
+        String dataToBeWritten = "Username:" + username + "Password:" + passwd + "Email:" + email + "\r\n";
 
         //adding data to database.txt
 
         try {
-            RandomAccessFile raf = new RandomAccessFile("database.txt", "rw");
-            raf.writeBytes("Username:" + name + "Password:" + passwd + "Email:" + email + "\r\n");
+            // Creates a Writer using FileWriter
+            Writer output = new FileWriter("database.txt", true);
+            output.write(dataToBeWritten);
+            output.close();
+        }
 
-
-        } catch (FileNotFoundException e)
-        {
-            // write data in logger
-        } catch (IOException e) {
-            //throw new RuntimeException(e); write data in logger
+        catch (Exception e) {
+            e.getStackTrace();
         }
 
     }
 
     public void checkData(String username, String passwd) throws IOException {
+        boolean userFound = false;
 
         try
         {
-            String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd;
+            String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd + "Email";
             List<String> lines = Files.readAllLines(Path.of("database.txt"));
             for (String line : lines) {
                 if (line.contains(customPatternForSearchingInDb)) {
-                    System.out.println("good");
+                    System.out.println("there is a user with that password");
+                    userFound = true;
+                    break;
                 }
             }
         }
@@ -73,7 +71,10 @@ public class Database {
             //write data in logger
         }
 
-
+        if (!userFound)
+        {
+            System.out.println("there is NO user with that password");
+        }
 
 
     }
