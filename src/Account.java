@@ -27,7 +27,7 @@ public class Account {
             }
             passwdInput = scan.nextLine();
 
-            if (newdb.checkData(usernameInput, passwdInput)) {
+            if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
                 System.out.println("You have logged in successfully");
                 break;
             }
@@ -36,4 +36,28 @@ public class Account {
             }
         }
     }
+
+    public static void register(Database newdb) {
+
+
+        Scanner scan = new Scanner(System.in);
+        while(true)
+        {
+            System.out.print("Enter username: ");
+            String usernameInput = scan.nextLine();
+            System.out.print("Enter password: ");
+            String passwdInput = scan.nextLine();
+            System.out.print("Enter email: ");
+            String emailInput = scan.nextLine();
+
+            if ((newdb.checkUsername(usernameInput))) {
+                System.out.println("Username is already taken, try again");
+            } else {
+                newdb.addData(usernameInput, passwdInput, emailInput);
+                break;
+            }
+        }
+    }
 }
+
+
