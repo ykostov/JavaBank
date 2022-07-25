@@ -1,4 +1,7 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Database {
@@ -24,13 +27,13 @@ public class Database {
             try
             {
                 FileWriter fr = new FileWriter("database.txt");
+                System.out.println("file created");
             }
             catch (Exception ex)
             {
-                // write data to looger
+                // write data to logger
             }
 
-            System.out.println("file created");
         }
     }
 
@@ -41,18 +44,37 @@ public class Database {
 
         try {
             RandomAccessFile raf = new RandomAccessFile("database.txt", "rw");
-            raf.writeBytes("Username:" + name + "\r\n");
-            raf.writeBytes("Password:" + passwd + "\r\n");
-            raf.writeBytes("Email:" + email + "\r\n");
+            raf.writeBytes("Username:" + name + "Password:" + passwd + "Email:" + email + "\r\n");
+
 
         } catch (FileNotFoundException e)
         {
             // write data in logger
+        } catch (IOException e) {
+            //throw new RuntimeException(e); write data in logger
+        }
+
+    }
+
+    public void checkData(String username, String passwd) throws IOException {
+
+        try
+        {
+            String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd;
+            List<String> lines = Files.readAllLines(Path.of("database.txt"));
+            for (String line : lines) {
+                if (line.contains(customPatternForSearchingInDb)) {
+                    System.out.println("good");
+                }
+            }
         }
         catch (Exception e)
         {
             //write data in logger
         }
+
+
+
 
     }
 
