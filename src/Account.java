@@ -59,7 +59,9 @@ public class Account {
                   {
                       System.out.println("you do not have money in ATM");
                   }
+
               }
+              else if (userInput.startsWith("with")) { WithdrawMoneyFromAccount(); }
               else if (userInput.startsWith("exit")) { break; }
             }
         }
@@ -142,6 +144,49 @@ public class Account {
 
         }
 
+    }
+
+    private void WithdrawMoneyFromAccount() throws IOException {
+        if (fileCount == 0) {
+            System.out.println("You do not have an account.");
+        }
+        else
+        {
+            System.out.println("From which account do you want to withdraw money? (1 for acc1, 2 for acc2 or 3 for acc3");
+            Scanner scan = new Scanner(System.in);
+            String userInput = scan.nextLine();
+            if (Integer.parseInt(userInput) > fileCount)
+            {
+                System.out.println("you have selected an account that you do not have");
+            }
+
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
+            BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+            while(true)
+            {
+                System.out.println("In this account you have " + moneyInAccount);
+                System.out.println("how much do you want to withdraw?");
+                String moneyToWithdraw = scan.nextLine();
+                if(Integer.parseInt(moneyToWithdraw) > Integer.parseInt(lines.get(0)))
+                {
+                    System.out.println("you have entered an amount that is higher than your account. Please, try again");
+                    continue;
+                }
+                try
+                {
+                    BigInteger newMoney = moneyInAccount.subtract(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                    Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
+                    output.write(String.valueOf(newMoney));
+                    output.close();
+                    break;
+                } catch (Exception e)
+                {
+                    System.out.println("Something went wrong - " + e.toString());
+                }
+
+            }
+
+        }
     }
 
 
