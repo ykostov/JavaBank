@@ -49,5 +49,20 @@ public enum Message {
         public String toString() {
             return "You have registered successfully!";
         }
+    },
+    MAINMENU {
+        public String toString() {
+            return "type 'new account' to create an account or 'add money' to add money in ATM (obviously)";
+        }
+    },
+    HOWMUCH {
+        public String toString() {
+            return "how much money would you like to insert into the ATM?";
+        }
+    },
+    CURRENTMONEY {
+        public String toString() {
+            return "current money in ATM: ";
+        }
     };
 }
