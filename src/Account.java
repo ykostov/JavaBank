@@ -73,11 +73,11 @@ public class Account {
         }
         else
         {
-            if (fileCount == 0) { fileCount = 1; }
+
             try
             {
-            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ fileCount + ".txt");
-            fileCount++;
+            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
+
             System.out.println("Account created successfully");
             }catch (Exception ex)
             {
