@@ -32,7 +32,7 @@ public class Account {
 
     }
 
-    public void setupAccount() throws IOException {
+    public void setupAccount(Database newdb) throws IOException {
       countAccountsCreatedForUser();
       String userInput;
       if (moreThanThreeAccounts)
@@ -62,6 +62,7 @@ public class Account {
 
               }
               else if (userInput.startsWith("with")) { WithdrawMoneyFromAccount(); }
+              else if (userInput.startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
               else if (userInput.startsWith("exit")) { break; }
             }
         }
@@ -198,6 +199,30 @@ public class Account {
             }
 
         }
+    }
+
+    private void transferMoneyToAnotherUser(Database newdb) throws IOException {
+        System.out.println("money in ATM: " + Extranet.getMoneyATM() + ". Enter how much would you want to transfer");
+        Scanner scan = new Scanner(System.in);
+        String moneyToTransfer = scan.nextLine();
+
+        if (Integer.parseInt(moneyToTransfer) > Extranet.getMoneyATM().intValue())
+        {
+            System.out.println("You want to transfer more money that you have in ATM");
+        }
+        System.out.println("write username to transfer money from ATM");
+
+        String usernameToTransferMoney = scan.nextLine();
+        if (newdb.checkUsername(usernameToTransferMoney))
+        {
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
+            BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+            BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToTransfer)));
+            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
+            output.write(String.valueOf(newMoney));
+            output.close();
+        }
+
     }
 
 
