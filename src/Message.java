@@ -64,5 +64,22 @@ public enum Message {
         public String toString() {
             return "current money in ATM: ";
         }
+    },
+    MAXACC {
+        public String toString() {
+            return "you have maximum accounts allowed for a basic user (3). Become VIP to get more";
+        }
+    },
+    ACCMENU {
+        public String toString() {
+            return "- that is your number of accounts. Would you like to 'list' them, 'create' a new one or 'exit'?";
+        }
+
+    },
+    SUCCESSACC {
+        public String toString() {
+            return "Account created successfully!";
+        }
+
     };
 }

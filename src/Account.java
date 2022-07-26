@@ -35,7 +35,7 @@ public class Account {
       String userInput;
       if (moreThanThreeAccounts)
       {
-          System.out.println("you have maximum accounts allowed for a basic user (3)");
+          System.out.println(Message.MAXACC);
       }
       else {
           while(true) {
@@ -45,7 +45,7 @@ public class Account {
               }
               else
               {
-                  System.out.println("You have " + fileCount + " accounts. Would you like to 'list' them, 'create' a new one or 'exit'?");
+                  System.out.println(fileCount + " " + Message.ACCMENU);
               }
 
               Scanner scan = new Scanner(System.in);
@@ -69,7 +69,7 @@ public class Account {
     private void createAccount() throws IOException {
         if (fileCount >= 3)
         {
-            System.out.println("cannot create more accounts. You must delete one or become a VIP client.");
+            System.out.println(Message.MAXACC);
         }
         else
         {
@@ -78,7 +78,7 @@ public class Account {
             {
             FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
 
-            System.out.println("Account created successfully");
+            System.out.println(Message.SUCCESSACC);
             }catch (Exception ex)
             {
                 // write data to logger

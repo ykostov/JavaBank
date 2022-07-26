@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="push workspace.xmp">
-      <change afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
+    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="fix bug where fileCount doubles when its value is 0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,16 +39,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -203,7 +205,28 @@
       <option name="project" value="LOCAL" />
       <updated>1658767518261</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="commit half of system messages represented as enum">
+      <created>1658770571562</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1658770571562</updated>
+    </task>
+    <task id="LOCAL-00021" summary="add messages in menu">
+      <created>1658819275012</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1658819275012</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix bug where fileCount doubles when its value is 0">
+      <created>1658819354590</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1658819354590</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,7 +240,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="accounts" />
+                        <option value="enumMessages" />
                       </list>
                     </value>
                   </entry>
@@ -250,6 +273,9 @@
     <MESSAGE value="create BigInteger money-in-ATM, set by user in Menu" />
     <MESSAGE value="little format of brackets" />
     <MESSAGE value="push workspace.xmp" />
-    <option name="LAST_COMMIT_MESSAGE" value="push workspace.xmp" />
+    <MESSAGE value="commit half of system messages represented as enum" />
+    <MESSAGE value="add messages in menu" />
+    <MESSAGE value="fix bug where fileCount doubles when its value is 0" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug where fileCount doubles when its value is 0" />
   </component>
 </project>
