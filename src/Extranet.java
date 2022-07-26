@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Extranet {
 
     private static String currentUserName;
-    private static BigInteger moneyATM;
+    private static BigInteger moneyATM = BigInteger.valueOf(0);
     private static boolean isAdmin = false;
 
     public static String getCurrentUserName() {
@@ -57,7 +57,7 @@ public class Extranet {
                 {
                     System.err.println("Failed to create directory!" + e.getMessage());
                 }
-                Menu.mainMenu();
+                Menu.mainMenu(newdb);
                 break;
             }
             else {
@@ -91,7 +91,7 @@ public class Extranet {
                     Files.createDirectories(path);
                     currentUserName = usernameInput;
                     System.out.println(Message.SUCCESSREGISTER);
-                    Menu.mainMenu();
+                    Menu.mainMenu(newdb);
                     break;
                 }
                 catch (Exception e)
