@@ -5,6 +5,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+// Extranet class with its static method is used for login/registration and for storing temp variables.
+
+
 public class Extranet {
 
     private static String currentUserName;
@@ -28,6 +31,10 @@ public class Extranet {
     }
 
 
+// login method used for.... login. If the given username and password exists together
+// the java.nio.file.File creates a dir having the username as name.
+// System.getProperty("user.dir") is used to get the current pwd of the project.
+// Then, the user is forwarded to Menu.mainMenu(newdb) and currentUserName is assigned with user's username.
 
     public static void login(Database newdb) throws IOException {
         String usernameInput;

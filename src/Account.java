@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// This class is used for managing accounts of user
+
 public class Account {
 
-    private boolean moreThanThreeAccounts = false;
-    private int fileCount = 0;
+    private int fileCount;
 
+
+    // this method checks the amount files in user's dir, viz. accounts
     private void countAccountsCreatedForUser()
     {
         try
@@ -22,20 +25,17 @@ public class Account {
             fileCount= directory.list().length;
         } catch (NullPointerException e)
         {
-            moreThanThreeAccounts = false;
-        }
-
-        if (fileCount > 3)
-        {
-            moreThanThreeAccounts = true;
+            fileCount = 0;
         }
 
     }
 
+    // this is the main Account method with its menu
+
     public void setupAccount(Database newdb) throws IOException {
       countAccountsCreatedForUser();
       String userInput;
-      if (moreThanThreeAccounts)
+      if (fileCount > 3)
       {
           System.out.println(Message.MAXACC);
       }
@@ -69,6 +69,7 @@ public class Account {
 
     }
 
+    // this method lists all accounts in user's dir and reads them
 
     private void listAccounts() throws IOException {
         for (int i = 1; i<=fileCount; i++)
@@ -78,6 +79,8 @@ public class Account {
             System.out.println(accounts);
         }
     }
+
+    // this method creates an Account /file/ in user's directory
     private void createAccount() throws IOException {
         if (fileCount >= 3)
         {
