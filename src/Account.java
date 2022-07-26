@@ -133,6 +133,8 @@ public class Account {
                         Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
                         output.write(String.valueOf(newMoney));
                         output.close();
+                        Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigInteger.valueOf(Integer.parseInt(moneyToImport))));
+                        System.out.println("Money successfully imported!");
                     } catch (Exception e)
                     {
                         System.out.println("Something went wrong - " + e.toString());
@@ -178,6 +180,15 @@ public class Account {
                     Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
                     output.write(String.valueOf(newMoney));
                     output.close();
+                    if (Extranet.getMoneyATM() == null)
+                    {
+                        Extranet.setMoneyATM(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                    }
+                    else
+                    {
+                        Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw))));
+                    }
+                    System.out.println("Money successfully withdrew");
                     break;
                 } catch (Exception e)
                 {
