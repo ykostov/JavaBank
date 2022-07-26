@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="fix bug where fileCount doubles when its value is 0">
+    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="create importMoneyInAccount method, calculate money after addition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -23,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="databaseSetup" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,16 +39,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -59,6 +60,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -226,7 +228,28 @@
       <option name="project" value="LOCAL" />
       <updated>1658819354590</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="commit last system messages moved to Message enum">
+      <created>1658820308763</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1658820308763</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add while loop in mainMenu">
+      <created>1658824410048</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1658824410048</updated>
+    </task>
+    <task id="LOCAL-00025" summary="create importMoneyInAccount method, calculate money after addition">
+      <created>1658824490363</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1658824490363</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,7 +263,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="enumMessages" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -253,7 +276,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial Commit" />
     <MESSAGE value="Init main class and todo" />
     <MESSAGE value="Init client class" />
     <MESSAGE value="Init db class and createDb, addData methods (not final)" />
@@ -276,6 +298,9 @@
     <MESSAGE value="commit half of system messages represented as enum" />
     <MESSAGE value="add messages in menu" />
     <MESSAGE value="fix bug where fileCount doubles when its value is 0" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug where fileCount doubles when its value is 0" />
+    <MESSAGE value="commit last system messages moved to Message enum" />
+    <MESSAGE value="add while loop in mainMenu" />
+    <MESSAGE value="create importMoneyInAccount method, calculate money after addition" />
+    <option name="LAST_COMMIT_MESSAGE" value="create importMoneyInAccount method, calculate money after addition" />
   </component>
 </project>

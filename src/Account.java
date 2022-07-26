@@ -114,18 +114,21 @@ public class Account {
             System.out.println("In which account do you want to import money? (1 for acc1, 2 for acc2 or 3 for acc3");
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
-            if (userInput.startsWith("1") && fileCount >= 1)
+            if (Integer.parseInt(userInput) > fileCount)
             {
+                System.out.println("very bad");
+            }
 
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
                 BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
                 System.out.println("You have " + Extranet.getMoneyATM() + " money in ATM. How much of them do you want to import?");
                 String moneyToImport = scan.nextLine();
-//                BigInteger moneyToImport = moneyInAccount.subtract(BigInteger.valueOf(Integer.parseInt(userInput)));
-//                System.out.println("moneyToImport" + moneyToImport);
                 BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
-                System.out.println(newMoney);
-            }
+                Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
+                output.write(String.valueOf(newMoney));
+                output.close();
+
+
         }
 
     }
