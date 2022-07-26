@@ -116,17 +116,33 @@ public class Account {
             String userInput = scan.nextLine();
             if (Integer.parseInt(userInput) > fileCount)
             {
-                System.out.println("very bad");
+                System.out.println("you have selected an account that you do not have");
             }
 
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
                 BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
                 System.out.println("You have " + Extranet.getMoneyATM() + " money in ATM. How much of them do you want to import?");
                 String moneyToImport = scan.nextLine();
-                BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
-                Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
-                output.write(String.valueOf(newMoney));
-                output.close();
+
+                if (Integer.parseInt(moneyToImport) > Extranet.getMoneyATM().intValue())
+                {
+                    System.out.println("You want to import more money that you have in ATM");
+                }
+                else
+                {
+                    try
+                    {
+                        BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
+                        output.write(String.valueOf(newMoney));
+                        output.close();
+                    } catch (Exception e)
+                    {
+                        System.out.println("Something went wrong - " + e.toString());
+                    }
+
+                }
+
 
 
         }
