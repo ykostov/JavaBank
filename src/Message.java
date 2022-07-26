@@ -52,7 +52,7 @@ public enum Message {
     },
     MAINMENU {
         public String toString() {
-            return "type 'new account' to create an account or 'add money' to add money in ATM (obviously)";
+            return "type 'new account' to create an account or 'add money' to add money in ATM (obviously). Current money - ";
         }
     },
     HOWMUCH {
@@ -72,7 +72,7 @@ public enum Message {
     },
     ACCMENU {
         public String toString() {
-            return "- that is your number of accounts. Would you like to 'list' them, 'create' a new one or 'exit'?";
+            return "- that is your number of accounts. Would you like to 'list' them, 'create' a new one, 'import' money, 'withdraw' money or 'exit'?";
         }
 
     },
