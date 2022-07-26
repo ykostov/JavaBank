@@ -3,7 +3,7 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Menu {
-    public static void mainMenu() throws IOException {
+    public static void mainMenu(Database newdb) throws IOException {
 
 
         while(true) {
@@ -16,7 +16,7 @@ public class Menu {
 
             if (userInput.startsWith("new acc")) {
                 Account acc = new Account();
-                acc.setupAccount();
+                acc.setupAccount(newdb);
             } else if (userInput.startsWith("add mo")) {
                 System.out.println(Message.HOWMUCH);
                 Scanner scan1 = new Scanner(System.in);
