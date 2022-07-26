@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="successfully write new value of money in account">
+    <list default="true" id="f3858011-a2ca-4bcc-a38c-8994df38bd62" name="Changes" comment="improve importMoneyInAccount method with ifs and try-catch">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.java" afterDir="false" />
@@ -255,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658825099576</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="improve importMoneyInAccount method with ifs and try-catch">
+      <created>1658825730871</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1658825730871</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,7 +290,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Init client class" />
     <MESSAGE value="Init db class and createDb, addData methods (not final)" />
     <MESSAGE value="add checker for wrote data" />
     <MESSAGE value="refactor Database add and check data, fix customPatternForSearchingInDb" />
@@ -307,6 +314,7 @@
     <MESSAGE value="add while loop in mainMenu" />
     <MESSAGE value="create importMoneyInAccount method, calculate money after addition" />
     <MESSAGE value="successfully write new value of money in account" />
-    <option name="LAST_COMMIT_MESSAGE" value="successfully write new value of money in account" />
+    <MESSAGE value="improve importMoneyInAccount method with ifs and try-catch" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve importMoneyInAccount method with ifs and try-catch" />
   </component>
 </project>

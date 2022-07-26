@@ -41,14 +41,9 @@ public class Account {
       }
       else {
           while(true) {
-//              if (fileCount == 0)
-//              {
-//                  System.out.println("You have 0 accounts. Would you like to 'create' a new one or 'exit'?");
-//              }
-//              else
-  //            {
-                  System.out.println(fileCount + " " + Message.ACCMENU);
-//              }
+
+              System.out.println(fileCount + " " + Message.ACCMENU);
+
 
               Scanner scan = new Scanner(System.in);
               userInput = scan.nextLine();
