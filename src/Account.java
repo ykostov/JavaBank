@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -134,7 +135,7 @@ public class Account {
             }
 
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
-                BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+                BigDecimal moneyInAccount = BigDecimal.valueOf(Integer.parseInt(lines.get(0)));
                 String currencyInAccount = lines.get(1);
                 System.out.println("You have " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
                 if (Extranet.getCurrencyInATM().equals(currencyInAccount)) {
@@ -145,11 +146,11 @@ public class Account {
                         System.out.println("You want to import more money that you have in ATM");
                     } else {
                         try {
-                            BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
+                            BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Integer.parseInt(moneyToImport)));
                             Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount);
                             output.close();
-                            Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigInteger.valueOf(Integer.parseInt(moneyToImport))));
+                            Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigDecimal.valueOf(Integer.parseInt(moneyToImport))));
                             System.out.println("Money successfully imported!");
                         } catch (Exception e) {
                             System.out.println("Something went wrong - " + e.toString());
@@ -183,7 +184,7 @@ public class Account {
             }
 
             List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
-            BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+            BigDecimal moneyInAccount = BigDecimal.valueOf(Integer.parseInt(lines.get(0)));
             String currencyInAccount = lines.get(1);
             while(true) {
                 System.out.println("In this account you have " + moneyInAccount + " " + currencyInAccount);
@@ -197,14 +198,14 @@ public class Account {
                         continue;
                     }
                     try {
-                        BigInteger newMoneyInAccount = moneyInAccount.subtract(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                        BigDecimal newMoneyInAccount = moneyInAccount.subtract(BigDecimal.valueOf(Integer.parseInt(moneyToWithdraw)));
                         Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
                         output.write(String.valueOf(newMoneyInAccount) + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         if (Extranet.getMoneyATM() == null) {
-                            Extranet.setMoneyATM(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                            Extranet.setMoneyATM(BigDecimal.valueOf(Integer.parseInt(moneyToWithdraw)));
                         } else {
-                            Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw))));
+                            Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigDecimal.valueOf(Integer.parseInt(moneyToWithdraw))));
                         }
                         Extranet.setCurrencyInATM(currencyInAccount.toUpperCase());
                         System.out.println("Money successfully withdrew");
@@ -238,10 +239,10 @@ public class Account {
             String usernameToTransferMoney = scan.nextLine();
             if (newdb.checkUsername(usernameToTransferMoney)) {
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
-                BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+                BigDecimal moneyInAccount = BigDecimal.valueOf(Integer.parseInt(lines.get(0)));
                 String currencyInAccount = lines.get(1);
                 if (currencyInAccount.equals(Extranet.getCurrencyInATM())) {
-                    BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToTransfer)));
+                    BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Integer.parseInt(moneyToTransfer)));
                     Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
                     output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
                     output.close();

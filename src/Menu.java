@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -29,7 +30,7 @@ public class Menu {
                     System.out.println(Message.HOWMUCH);
 
                     moneyInput = scan1.nextLong();
-                    Extranet.setMoneyATM(BigInteger.valueOf(moneyInput));
+                    Extranet.setMoneyATM(BigDecimal.valueOf(moneyInput));
                     Extranet.setCurrencyInATM(chosenCurrency);
                     System.out.println(Message.CURRENTMONEY + "" + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM());
                 }

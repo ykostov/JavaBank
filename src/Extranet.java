@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 public class Extranet {
 
     private static String currentUserName;
-    private static BigInteger moneyATM = BigInteger.valueOf(0);
+    private static BigDecimal moneyATM = BigDecimal.valueOf(0);
     private static String currencyInATM = "";
     private static boolean isAdmin = false;
 
@@ -19,11 +20,11 @@ public class Extranet {
         return currentUserName;
     }
 
-    public static BigInteger getMoneyATM() {
+    public static BigDecimal getMoneyATM() {
         return moneyATM;
     }
 
-    public static void setMoneyATM(BigInteger moneyATM) {
+    public static void setMoneyATM(BigDecimal moneyATM) {
         Extranet.moneyATM = moneyATM;
     }
 
