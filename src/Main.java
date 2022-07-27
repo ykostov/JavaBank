@@ -1,6 +1,8 @@
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
 
         /* TODO:
 
@@ -31,7 +33,35 @@ public class Main {
 
          */
 
+        Database newdb = new Database("users");
+        newdb.createDb();
 
-        System.out.println("Hello World");
+        System.out.println(Message.WELCOME);  // Hello World
+        Scanner scan = new Scanner(System.in);
+        String userInput = scan.nextLine();
+
+        while (true)
+        {
+            if (userInput.startsWith("log"))
+            {
+                Extranet.login(newdb);
+                break;
+            }
+            else if (userInput.startsWith("reg"))
+            {
+                Extranet.register(newdb);
+                break;
+            }
+            else if (userInput.startsWith("exit"))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("I do not understand you. Please, try again. (login or register)");
+            }
+        }
+
+
     }
 }
