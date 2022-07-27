@@ -136,28 +136,31 @@ public class Account {
 
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
                 BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
-                System.out.println("You have " + Extranet.getMoneyATM() + " money in ATM. How much of them do you want to import?");
-                String moneyToImport = scan.nextLine();
+                String currencyInAccount = lines.get(1);
+                System.out.println("You have " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
+                if (Extranet.getCurrencyInATM().equals(currencyInAccount)) {
 
-                if (Integer.parseInt(moneyToImport) > Extranet.getMoneyATM().intValue())
-                {
-                    System.out.println("You want to import more money that you have in ATM");
+                    String moneyToImport = scan.nextLine();
+
+                    if (Integer.parseInt(moneyToImport) > Extranet.getMoneyATM().intValue()) {
+                        System.out.println("You want to import more money that you have in ATM");
+                    } else {
+                        try {
+                            BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
+                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                            output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount);
+                            output.close();
+                            Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigInteger.valueOf(Integer.parseInt(moneyToImport))));
+                            System.out.println("Money successfully imported!");
+                        } catch (Exception e) {
+                            System.out.println("Something went wrong - " + e.toString());
+                        }
+
+                    }
                 }
                 else
                 {
-                    try
-                    {
-                        BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToImport)));
-                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
-                        output.write(String.valueOf(newMoney));
-                        output.close();
-                        Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigInteger.valueOf(Integer.parseInt(moneyToImport))));
-                        System.out.println("Money successfully imported!");
-                    } catch (Exception e)
-                    {
-                        System.out.println("Something went wrong - " + e.toString());
-                    }
-
+                    System.out.println("You either don't have money in your ATM, or the currency of it and of the account does not matches. You can choose different account, import money in ATM with the right currency or change currency of account");
                 }
 
 
