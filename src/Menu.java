@@ -9,7 +9,7 @@ public class Menu {
 
 
         while(true) {
-            System.out.println(Message.MAINMENU + " " + Extranet.getMoneyATM());
+            System.out.println(Message.MAINMENU + " " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM());
 
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
@@ -20,11 +20,23 @@ public class Menu {
                 Account acc = new Account();
                 acc.setupAccount(newdb);
             } else if (userInput.startsWith("add mo")) {
-                System.out.println(Message.HOWMUCH);
                 Scanner scan1 = new Scanner(System.in);
-                moneyInput = scan1.nextLong();
-                Extranet.setMoneyATM(BigInteger.valueOf(moneyInput));
-                System.out.println(Message.CURRENTMONEY + "" + Extranet.getMoneyATM());
+                System.out.println("Enter currency: BGN or RSD?");
+                String chosenCurrency;
+                chosenCurrency = scan.nextLine().toUpperCase().trim();
+                if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
+
+                    System.out.println(Message.HOWMUCH);
+
+                    moneyInput = scan1.nextLong();
+                    Extranet.setMoneyATM(BigInteger.valueOf(moneyInput));
+                    Extranet.setCurrencyInATM(chosenCurrency);
+                    System.out.println(Message.CURRENTMONEY + "" + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM());
+                }
+                else
+                {
+                    System.out.println("Please try again");
+                }
             }
             else if (userInput.startsWith("exit"))
             {
