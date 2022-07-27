@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Scanner;
 
+// this menu class is used for all big menus in JavaBank
+
 public class Menu {
     public static void mainMenu(Database newdb) throws IOException {
 
