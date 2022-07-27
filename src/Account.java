@@ -91,9 +91,23 @@ public class Account {
 
             try
             {
+                String chosenCurrency = "";
+                while(true) {
+
+
+                    System.out.println("Enter currency - BGN or  RSD");
+                    Scanner scan = new Scanner(System.in);
+                    chosenCurrency = scan.nextLine().toUpperCase().trim();
+                    if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
+                        break;
+                    } else {
+                        System.out.println("You have entered something I do not want. Try again..");
+                    }
+                }
+
             FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
             Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ fileCount + ".txt", true);
-            output.write("0");
+            output.write("0" + "\r\n" + chosenCurrency);
             output.close();
             System.out.println(Message.SUCCESSACC);
             }catch (Exception ex)
