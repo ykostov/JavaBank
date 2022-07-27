@@ -5,7 +5,6 @@ import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -185,37 +184,39 @@ public class Account {
 
             List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
             BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
-            while(true)
-            {
-                System.out.println("In this account you have " + moneyInAccount);
-                System.out.println("how much do you want to withdraw?");
-                String moneyToWithdraw = scan.nextLine();
-                if(Integer.parseInt(moneyToWithdraw) > Integer.parseInt(lines.get(0)))
-                {
-                    System.out.println("you have entered an amount that is higher than your account. Please, try again");
-                    continue;
-                }
-                try
-                {
-                    BigInteger newMoney = moneyInAccount.subtract(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
-                    Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt", false);
-                    output.write(String.valueOf(newMoney));
-                    output.close();
-                    if (Extranet.getMoneyATM() == null)
-                    {
-                        Extranet.setMoneyATM(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
-                    }
-                    else
-                    {
-                        Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw))));
-                    }
-                    System.out.println("Money successfully withdrew");
-                    break;
-                } catch (Exception e)
-                {
-                    System.out.println("Something went wrong - " + e.toString());
-                }
+            String currencyInAccount = lines.get(1);
+            while(true) {
+                System.out.println("In this account you have " + moneyInAccount + " " + currencyInAccount);
 
+                if (Extranet.getCurrencyInATM().equals(currencyInAccount) || Extranet.getCurrencyInATM().equals("")) {
+
+                    System.out.println("how much do you want to withdraw?");
+                    String moneyToWithdraw = scan.nextLine();
+                    if (Integer.parseInt(moneyToWithdraw) > Integer.parseInt(lines.get(0))) {
+                        System.out.println("you have entered an amount that is higher than your account. Please, try again");
+                        continue;
+                    }
+                    try {
+                        BigInteger newMoneyInAccount = moneyInAccount.subtract(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                        output.write(String.valueOf(newMoneyInAccount) + "\r\n" + currencyInAccount.toUpperCase());
+                        output.close();
+                        if (Extranet.getMoneyATM() == null) {
+                            Extranet.setMoneyATM(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw)));
+                        } else {
+                            Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigInteger.valueOf(Integer.parseInt(moneyToWithdraw))));
+                        }
+                        Extranet.setCurrencyInATM(currencyInAccount.toUpperCase());
+                        System.out.println("Money successfully withdrew");
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong - " + e.toString());
+                    }
+                } else
+                {
+                    System.out.println("You have different currency in your account. You can go back at main menu and take out that money from ATM");
+                    break;
+                }
             }
 
         }
