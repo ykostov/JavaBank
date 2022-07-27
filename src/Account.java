@@ -223,7 +223,7 @@ public class Account {
     }
 
     private void transferMoneyToAnotherUser(Database newdb) throws IOException {
-        System.out.println("money in ATM: " + Extranet.getMoneyATM() + ". Enter how much would you want to transfer");
+        System.out.println("money in ATM: " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM() + ". Enter how much would you want to transfer");
         Scanner scan = new Scanner(System.in);
         String moneyToTransfer = scan.nextLine();
 
@@ -231,17 +231,32 @@ public class Account {
         {
             System.out.println("You want to transfer more money that you have in ATM");
         }
-        System.out.println("write username to transfer money from ATM");
+        else {
 
-        String usernameToTransferMoney = scan.nextLine();
-        if (newdb.checkUsername(usernameToTransferMoney))
-        {
-            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
-            BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
-            BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToTransfer)));
-            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
-            output.write(String.valueOf(newMoney));
-            output.close();
+            System.out.println("write username to transfer money from ATM");
+
+            String usernameToTransferMoney = scan.nextLine();
+            if (newdb.checkUsername(usernameToTransferMoney)) {
+                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
+                BigInteger moneyInAccount = BigInteger.valueOf(Integer.parseInt(lines.get(0)));
+                String currencyInAccount = lines.get(1);
+                if (currencyInAccount.equals(Extranet.getCurrencyInATM())) {
+                    BigInteger newMoney = moneyInAccount.add(BigInteger.valueOf(Integer.parseInt(moneyToTransfer)));
+                    Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
+                    output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
+                    output.close();
+                    System.out.println("Money transferred successfully!");
+                    Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(newMoney));
+                } else {
+                    System.out.println("Your currency does not matches with the currency in the account of the other user. Please, change your currency in your ATM before proceeding. ");
+                }
+
+            }
+            else
+            {
+                System.out.println("Username not found!");
+            }
+
         }
 
     }
