@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Extranet class with its static method is used for login/registration and for storing temp variables.
 
@@ -38,6 +40,39 @@ public class Extranet {
 
     public static boolean getIsAdmin() {
         return isAdmin;
+    }
+
+    private static final String passwordPattern =
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+    private static final String usernamePattern = ".{5,20}";
+    private static final Pattern pattern = Pattern.compile(passwordPattern);
+    private static final Pattern patternUsername = Pattern.compile(usernamePattern);
+
+    private static boolean isPasswordValid(String password) {
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    private static boolean isUsernameValid(String username) {
+        Matcher matcher = patternUsername.matcher(username);
+        return matcher.matches();
+    }
+
+    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput) {
+        try
+        {
+            // creation of new client dir.
+            Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
+            Files.createDirectories(path);
+            currentUserName = usernameInput;
+            Menu.mainMenu(newdb);
+            return true;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
 
@@ -77,8 +112,7 @@ public class Extranet {
 
 
         Scanner scan = new Scanner(System.in);
-        while(true)
-        {
+        while(true) {
             System.out.print(Message.USERNAME);
             String usernameInput = scan.nextLine();
             System.out.print(Message.PASSWD);
@@ -86,34 +120,31 @@ public class Extranet {
             System.out.print(Message.EMAIL);
             String emailInput = scan.nextLine();
 
-            if ((newdb.checkUsername(usernameInput))) {
-                System.out.println(Message.TAKEN);
-            } else {
-                newdb.addData(usernameInput, passwdInput, emailInput);
-                System.out.println(Message.SUCCESSREGISTER);
-                if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
+            if (isPasswordValid(passwdInput)) {
+                if (isUsernameValid(usernameInput)) {
 
+
+                    if ((newdb.checkUsername(usernameInput))) {
+                        System.out.println(Message.TAKEN);
+                    } else {
+                        newdb.addData(usernameInput, passwdInput, emailInput);
+                        System.out.println(Message.SUCCESSREGISTER);
+                        if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
+
+                    }
+
+                }
+                else
+                    System.out.println("username must be 5-20 symbols");
             }
-
+            else
+            {
+                System.out.println("password must contain at least one lowercase character, one uppercase character, one digit, one special character, and a length between 8 to 20");
+            }
         }
     }
 
-    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput) {
-        try
-        {
-          // creation of new client dir.
-            Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
-            Files.createDirectories(path);
-            currentUserName = usernameInput;
-            Menu.mainMenu(newdb);
-            return true;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
+
 }
 
 
