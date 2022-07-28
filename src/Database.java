@@ -60,7 +60,7 @@ public class Database {
             e.getStackTrace();
         }
 
-        System.out.println("User is successfully registered");
+       // System.out.println("User is successfully registered");
 
     }
 
