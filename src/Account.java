@@ -62,6 +62,7 @@ public class Account {
               }
               else if (userInput.startsWith("with")) { WithdrawMoneyFromAccount(); }
               else if (userInput.startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
+              else if (userInput.startsWith("exch")) { changeCurrencyOfAccount(); }
               else if (userInput.startsWith("exit")) { break; }
             }
         }
@@ -261,5 +262,57 @@ public class Account {
 
     }
 
+    public void changeCurrencyOfAccount() throws IOException {
 
+        if (fileCount == 0) {
+            System.out.println("You do not have an account.");
+        }
+        else {
+            System.out.println("In which account do you want to change money currency? (1 for acc1, 2 for acc2 or 3 for acc3");
+            Scanner scan = new Scanner(System.in);
+            String userInput = scan.nextLine();
+            if (Integer.parseInt(userInput) > fileCount) {
+                System.out.println("you have selected an account that you do not have");
+            }
+
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt"));
+            BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
+            String currencyInAccount = lines.get(1);
+
+            if (currencyInAccount.equals("BGN"))
+            {
+                System.out.println("Your money in account are in BGN. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
+                if (scan.nextLine().startsWith("y"))
+                {
+                    try {
+                        BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(60.11));
+                        String newCurrency = "RSD";
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                        output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                        output.close();
+                        System.out.println("Money successfully exchanged!");
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong - " + e.toString());
+                    }
+                }
+            }
+            else if (currencyInAccount.equalsIgnoreCase("RSD"))
+            {
+                System.out.println("Your money in account are in RSD. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+                if (scan.nextLine().startsWith("y"))
+                {
+                    try {
+                        BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(0.017));
+                        String newCurrency = "BGN";
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                        output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                        output.close();
+                        System.out.println("Money successfully exchanged!");
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong - " + e.toString());
+                    }
+                }
+            }
+        }
+    }
 }
