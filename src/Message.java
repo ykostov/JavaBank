@@ -1,4 +1,5 @@
 public enum Message {
+
     WELCOME {
      public String toString() {
             return "Welcome to JavaBank! You can login or register";
@@ -37,7 +38,7 @@ public enum Message {
     },
     NOSUCCESSLOGIN {
         public String toString() {
-            return "Incorrect password, try again or enter 'stop'";
+            return "Incorrect password, try again or enter 'exit' to exit";
         }
     },
     TAKEN {
@@ -51,8 +52,11 @@ public enum Message {
         }
     },
     MAINMENU {
+        public static final String ANSI_BLUE = "\u001B[34m";
+        public static final String ANSI_RESET = "\u001B[0m";
+        public static final String ANSI_GREEN = "\u001B[32m";
         public String toString() {
-            return "type 'new account' to create an account or 'add money' to add money in ATM (obviously). Current money - ";
+            return ANSI_BLUE + "Welcome to our Main Menu, " + Extranet.getCurrentUserName() + "!." + ANSI_RESET + "\r\n" +  "Options you have: Open an " + ANSI_GREEN + "account" + ANSI_RESET + " ; " + ANSI_GREEN + "Add Money" + ANSI_RESET + " in ATM ; " + ANSI_GREEN + "Exchange" + ANSI_RESET + " money in ATM, or " + ANSI_GREEN + "exit" + ANSI_RESET;
         }
     },
     HOWMUCH {
@@ -61,8 +65,10 @@ public enum Message {
         }
     },
     CURRENTMONEY {
+        public static final String ANSI_BLUE = "\u001B[34m";
+        public static final String ANSI_RESET = "\u001B[0m";
         public String toString() {
-            return "current money in ATM: ";
+            return ANSI_BLUE + "You currently have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. " + ANSI_RESET;
         }
     },
     MAXACC {
