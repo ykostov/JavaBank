@@ -15,7 +15,7 @@ public class Menu {
 
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
-            long moneyInput;
+            double moneyInput;
 
 
             if (userInput.startsWith("new acc")) {
@@ -30,7 +30,7 @@ public class Menu {
 
                     System.out.println(Message.HOWMUCH);
 
-                    moneyInput = scan1.nextLong();
+                    moneyInput = scan1.nextDouble();
                     Extranet.setMoneyATM(BigDecimal.valueOf(moneyInput));
                     Extranet.setCurrencyInATM(chosenCurrency);
                     System.out.println(Message.CURRENTMONEY + "" + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM());
