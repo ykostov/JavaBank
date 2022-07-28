@@ -47,11 +47,11 @@ public class Account {
               Scanner scan = new Scanner(System.in);
               userInput = scan.nextLine();
 
-              if (userInput.startsWith("list")) { listAccounts(); }
-              else if (userInput.startsWith("create")) { createAccount(); }
-              else if (userInput.startsWith("import"))
+              if (userInput.toLowerCase().trim().startsWith("list")) { listAccounts(); }
+              else if (userInput.toLowerCase().trim().startsWith("create")) { createAccount(); }
+              else if (userInput.toLowerCase().trim().startsWith("import"))
               {
-                  if (Extranet.getMoneyATM() != null)
+                  if (ATM.getMoneyATM() != null)
                   {
                       importMoneyInAccount();
                   } else
@@ -60,10 +60,10 @@ public class Account {
                   }
 
               }
-              else if (userInput.startsWith("with")) { WithdrawMoneyFromAccount(); }
-              else if (userInput.startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
-              else if (userInput.startsWith("exch")) { changeCurrencyOfAccount(); }
-              else if (userInput.startsWith("exit")) { break; }
+              else if (userInput.toLowerCase().trim().startsWith("with")) { WithdrawMoneyFromAccount(); }
+              else if (userInput.toLowerCase().trim().startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
+              else if (userInput.toLowerCase().trim().startsWith("exch")) { changeCurrencyOfAccount(); }
+              else if (userInput.toLowerCase().trim().startsWith("exit")) { break; }
             }
         }
 
@@ -124,46 +124,44 @@ public class Account {
         if (fileCount == 0) {
             System.out.println("You do not have an account.");
         }
-        else
-        {
+        else {
             System.out.println("In which account do you want to import money? (1 for acc1, 2 for acc2 or 3 for acc3");
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
-            if (Integer.parseInt(userInput) > fileCount)
-            {
+            if (Integer.parseInt(userInput) > fileCount) {
                 System.out.println("you have selected an account that you do not have");
+            } else {
+
+
+
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt"));
+            BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
+            String currencyInAccount = lines.get(1);
+            System.out.println("You have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
+            if (ATM.getCurrencyInATM().equals(currencyInAccount)) {
+
+                String moneyToImport = scan.nextLine();
+
+                if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
+                    System.out.println("You want to import more money that you have in ATM");
+                } else {
+                    try {
+                        BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                        output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount);
+                        output.close();
+                        ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
+                        System.out.println("Money successfully imported!");
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong - " + e.toString());
+                    }
+
+                }
+            } else {
+                System.out.println("You either don't have money in your ATM, or the currency of it and of the account does not matches. You can choose different account, import money in ATM with the right currency or change currency of account");
             }
 
-                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
-                BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
-                String currencyInAccount = lines.get(1);
-                System.out.println("You have " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
-                if (Extranet.getCurrencyInATM().equals(currencyInAccount)) {
-
-                    String moneyToImport = scan.nextLine();
-
-                    if (Double.parseDouble(moneyToImport) > Extranet.getMoneyATM().doubleValue()) {
-                        System.out.println("You want to import more money that you have in ATM");
-                    } else {
-                        try {
-                            BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
-                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount);
-                            output.close();
-                            Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
-                            System.out.println("Money successfully imported!");
-                        } catch (Exception e) {
-                            System.out.println("Something went wrong - " + e.toString());
-                        }
-
-                    }
-                }
-                else
-                {
-                    System.out.println("You either don't have money in your ATM, or the currency of it and of the account does not matches. You can choose different account, import money in ATM with the right currency or change currency of account");
-                }
-
-
+        }
 
         }
 
@@ -173,23 +171,22 @@ public class Account {
         if (fileCount == 0) {
             System.out.println("You do not have an account.");
         }
-        else
-        {
+        else {
             System.out.println("From which account do you want to withdraw money? (1 for acc1, 2 for acc2 or 3 for acc3");
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
-            if (Integer.parseInt(userInput) > fileCount)
-            {
+            if (Integer.parseInt(userInput) > fileCount) {
                 System.out.println("you have selected an account that you do not have");
             }
+            else {
 
-            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ userInput + ".txt"));
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt"));
             BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
             String currencyInAccount = lines.get(1);
-            while(true) {
+            while (true) {
                 System.out.println("In this account you have " + moneyInAccount + " " + currencyInAccount);
 
-                if (Extranet.getCurrencyInATM().equals(currencyInAccount) || Extranet.getCurrencyInATM().equals("")) {
+                if (ATM.getCurrencyInATM().equals(currencyInAccount) || ATM.getCurrencyInATM().equals("")) {
 
                     System.out.println("how much do you want to withdraw?");
                     String moneyToWithdraw = scan.nextLine();
@@ -202,33 +199,33 @@ public class Account {
                         Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
                         output.write(String.valueOf(newMoneyInAccount) + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
-                        if (Extranet.getMoneyATM() == null) {
-                            Extranet.setMoneyATM(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw)));
+                        if (ATM.getMoneyATM() == null) {
+                            ATM.setMoneyATM(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw)));
                         } else {
-                            Extranet.setMoneyATM(Extranet.getMoneyATM().add(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw))));
+                            ATM.setMoneyATM(ATM.getMoneyATM().add(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw))));
                         }
-                        Extranet.setCurrencyInATM(currencyInAccount.toUpperCase());
+                        ATM.setCurrencyInATM(currencyInAccount.toUpperCase());
                         System.out.println("Money successfully withdrew");
                         break;
                     } catch (Exception e) {
                         System.out.println("Something went wrong - " + e.toString());
                     }
-                } else
-                {
+                } else {
                     System.out.println("You have different currency in your account. You can go back at main menu and take out that money from ATM");
                     break;
                 }
             }
+        }
 
         }
     }
 
     private void transferMoneyToAnotherUser(Database newdb) throws IOException {
-        System.out.println("money in ATM: " + Extranet.getMoneyATM() + " " + Extranet.getCurrencyInATM() + ". Enter how much would you want to transfer");
+        System.out.println("money in ATM: " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + ". Enter how much would you want to transfer");
         Scanner scan = new Scanner(System.in);
         String moneyToTransfer = scan.nextLine();
 
-        if (Double.parseDouble(moneyToTransfer) > Extranet.getMoneyATM().doubleValue())
+        if (Double.parseDouble(moneyToTransfer) > ATM.getMoneyATM().doubleValue())
         {
             System.out.println("You want to transfer more money that you have in ATM");
         }
@@ -241,13 +238,13 @@ public class Account {
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);
-                if (currencyInAccount.equals(Extranet.getCurrencyInATM())) {
+                if (currencyInAccount.equals(ATM.getCurrencyInATM())) {
                     BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToTransfer)));
                     Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
                     output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
                     output.close();
                     System.out.println("Money transferred successfully!");
-                    Extranet.setMoneyATM(Extranet.getMoneyATM().subtract(newMoney));
+                    ATM.setMoneyATM(ATM.getMoneyATM().subtract(newMoney));
                 } else {
                     System.out.println("Your currency does not matches with the currency in the account of the other user. Please, change your currency in your ATM before proceeding. ");
                 }
