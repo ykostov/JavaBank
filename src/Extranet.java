@@ -55,7 +55,7 @@ public class Extranet {
 
             System.out.print(Message.USERNAME);
             usernameInput = scan.nextLine();
-            if (usernameInput.startsWith("stop"))
+            if (usernameInput.toLowerCase().trim().startsWith("exi"))
             {
                 break;
             }
@@ -64,18 +64,8 @@ public class Extranet {
 
             if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
                 System.out.println(Message.SUCCESSLOGIN);
-                // creation of new client dir.
-                try {
-                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
-                    Files.createDirectories(path);
-                    currentUserName = usernameInput;
 
-                } catch (Exception e)
-                {
-                    System.err.println("Failed to create directory!" + e.getMessage());
-                }
-                Menu.mainMenu(newdb);
-                break;
+                if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
             }
             else {
                 System.out.println(Message.NOSUCCESSLOGIN);
@@ -99,26 +89,30 @@ public class Extranet {
             if ((newdb.checkUsername(usernameInput))) {
                 System.out.println(Message.TAKEN);
             } else {
-
-                try
-                {
-                    newdb.addData(usernameInput, passwdInput, emailInput);
-                    // creation of new client dir.
-                    Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
-                    Files.createDirectories(path);
-                    currentUserName = usernameInput;
-                    System.out.println(Message.SUCCESSREGISTER);
-                    Menu.mainMenu(newdb);
-                    break;
-                }
-                catch (Exception e)
-                {
-                    System.out.println(e.getMessage());
-                }
+                newdb.addData(usernameInput, passwdInput, emailInput);
+                System.out.println(Message.SUCCESSREGISTER);
+                if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
 
             }
 
         }
+    }
+
+    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput) {
+        try
+        {
+          // creation of new client dir.
+            Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
+            Files.createDirectories(path);
+            currentUserName = usernameInput;
+            Menu.mainMenu(newdb);
+            return true;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
 
