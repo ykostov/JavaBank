@@ -27,4 +27,8 @@ public class Menu {
             else if (userInput.startsWith("exit")) { break; }
         }
     }
+
+    public static void adminMenu() {
+        System.out.println("hello admin");
+    }
 }

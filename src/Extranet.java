@@ -58,14 +58,22 @@ public class Extranet {
         return matcher.matches();
     }
 
-    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput) {
+    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput, boolean isAdmin) {
         try
         {
             // creation of new client dir.
             Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
             Files.createDirectories(path);
             currentUserName = usernameInput;
-            Menu.mainMenu(newdb);
+            if (isAdmin)
+            {
+                Menu.adminMenu();
+            }
+            else
+            {
+                Menu.mainMenu(newdb);
+            }
+
             return true;
         }
         catch (Exception e)
@@ -81,7 +89,7 @@ public class Extranet {
 // System.getProperty("user.dir") is used to get the current pwd of the project.
 // Then, the user is forwarded to Menu.mainMenu(newdb) and currentUserName is assigned with user's username.
 
-    public static void login(Database newdb) throws IOException {
+    public static void login(Database newdb, boolean isAdmin) throws IOException {
         String usernameInput;
         String passwdInput;
         Scanner scan = new Scanner(System.in);
@@ -100,7 +108,7 @@ public class Extranet {
             if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
                 System.out.println(Message.SUCCESSLOGIN);
 
-                if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
+                if (createDirForUserAndPassToMainMenu(newdb, usernameInput, isAdmin)) break;
             }
             else {
                 System.out.println(Message.NOSUCCESSLOGIN);
@@ -108,7 +116,7 @@ public class Extranet {
         }
     }
 
-    public static void register(Database newdb) {
+    public static void register(Database newdb, boolean isAdmin) {
 
 
         Scanner scan = new Scanner(System.in);
@@ -129,7 +137,7 @@ public class Extranet {
                     } else {
                         newdb.addData(usernameInput, passwdInput, emailInput);
                         System.out.println(Message.SUCCESSREGISTER);
-                        if (createDirForUserAndPassToMainMenu(newdb, usernameInput)) break;
+                        if (createDirForUserAndPassToMainMenu(newdb, usernameInput, isAdmin)) break;
 
                     }
 
