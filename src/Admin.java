@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class Admin {
 
     private static final boolean isAdmin = true;
+
+
     public static void main() throws IOException {
         Database adminDb = new Database("admins");
         adminDb.createDb();
@@ -31,5 +33,23 @@ public class Admin {
         }
 
     }
+
+    public static void blockAccount() throws IOException {
+        Account acc = new Account();
+        acc.countAccountsCreatedForUser();
+//        int fileCount = acc.getFileCount();
+//
+//        System.out.println("choose an account:");
+//
+//        for (int i = 0; i < fileCount; i++) {
+//            System.out.print("acc" + i + " ");
+//        }
+//        Scanner scan = new Scanner(System.in);
+//        String userInput = scan.nextLine();
+        System.out.println("got here1");
+        acc.blockAccount("mitko", "1");
+    }
+
+
 }
 

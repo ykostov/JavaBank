@@ -14,9 +14,12 @@ public class Account {
 
     private int fileCount;
 
+    public int getFileCount() {
+        return fileCount;
+    }
 
     // this method checks the amount files in user's dir, viz. accounts
-    private void countAccountsCreatedForUser()
+    protected void countAccountsCreatedForUser()
     {
         try
         {
@@ -107,7 +110,7 @@ public class Account {
 
             FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
             Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ fileCount + ".txt", true);
-            output.write("0" + "\r\n" + chosenCurrency);
+            output.write("0" + "\r\n" + chosenCurrency + "\r\n" + "free");
             output.close();
             System.out.println(Message.SUCCESSACC);
             }catch (Exception ex)
@@ -312,4 +315,33 @@ public class Account {
             }
         }
     }
+
+
+    public void blockAccount(String username, String accountNumber) throws IOException {
+
+        BigDecimal moneyInAccount = getAccountMoney(username, accountNumber);
+        String currencyInAccount = getAccountCurrency(username, accountNumber);
+        String blockedStatus = getAccountBlockedStatus(username, accountNumber);
+
+        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + username + "/" + "acc"+ accountNumber + ".txt", false);
+        output.write(moneyInAccount + "\r\n" + currencyInAccount + "\r\n" + "blocked");
+        output.close();
+    }
+
+    private String getAccountBlockedStatus(String username, String accountNumber) throws IOException {
+        List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt"));
+        return lines.get(2);
+    }
+
+    private String getAccountCurrency(String username, String accountNumber) throws IOException {
+        List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt"));
+        return lines.get(1);
+    }
+
+    private BigDecimal getAccountMoney(String username, String accountNumber) throws IOException {
+        List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt"));
+        return BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
+    }
+
+
 }
