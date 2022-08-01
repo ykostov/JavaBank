@@ -6,7 +6,7 @@ public class Admin {
     private static final boolean isAdmin = true;
 
 
-    public static void main() throws IOException {
+    public static void main(Database newdb) throws IOException {
         Database adminDb = new Database("admins");
         adminDb.createDb();
         while (true)
@@ -45,6 +45,35 @@ public class Admin {
 //        String userInput = scan.nextLine();
         System.out.println("got here1");
         acc.writeDataInAccount("block", "blocked", "mitko", "1");
+    }
+
+    public static void deleteAccount() throws IOException {
+        String username = "mitko";
+        Extranet.setCurrentUserName(username);
+        Account acc = new Account();
+        acc.countAccountsCreatedForUser();
+        while(true)
+        {
+            System.out.println("choose an account to delete (1, 2 or 3). The account must have 0 money of any type");
+            acc.listAccounts();
+            Scanner scan = new Scanner(System.in);
+            String accountNumber = scan.nextLine();
+            if (acc.ifAccountHasNoMoney(username, accountNumber))
+            {
+                System.out.println("go ahead");
+                acc.deleteAccount(username, accountNumber);
+                System.out.println("ended?");
+
+            }
+            else
+            {
+                System.out.println("money in account!");
+            }
+        }
+
+
+
+
     }
 
 

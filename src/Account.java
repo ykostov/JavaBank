@@ -82,7 +82,7 @@ public class Account {
 
     // this method lists all accounts in user's dir and reads them
 
-    private void listAccounts() throws IOException {
+    protected void listAccounts() throws IOException {
         for (int i = 1; i<=fileCount; i++)
         {
             System.out.print("Account"+i + "=");
@@ -357,6 +357,38 @@ public class Account {
         }
 
 
+    }
+
+    protected boolean ifAccountHasNoMoney(String username, String accountNumber) throws IOException {
+        BigDecimal moneyInAccount = getAccountMoney(username, accountNumber);
+        return (moneyInAccount.compareTo(BigDecimal.ZERO) == 0);
+    }
+
+    protected void deleteAccount(String username, String accountNumber) {
+
+        File account1 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc1.txt");
+        File account2 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc2.txt");
+        File account3 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc3.txt");
+
+        if (accountNumber.equals("1"))
+        {
+            account1.delete();
+            account2.renameTo(new File(account1.getPath()));
+            account3.renameTo(new File(account2.getPath()));
+
+        }
+        else  if (accountNumber.equals("2"))
+        {
+            account2.delete();
+            account3.renameTo(new File(account2.getPath()));
+
+        }
+        else  if (accountNumber.equals("3"))
+        {
+            account3.delete();
+
+
+        }
     }
 
 
