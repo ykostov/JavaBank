@@ -38,7 +38,7 @@ public class ATM {
                     double moneyInput = Double.parseDouble(moneyInput1);
                     ATM.setMoneyATM(BigDecimal.valueOf(moneyInput));
                     ATM.setCurrencyInATM(chosenCurrency);
-                    System.out.println(Message.CURRENTMONEY + "" + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM());
+                    System.out.println(Message.CURRENTMONEYINATM + "" + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM());
                     break;
                 } catch (Exception e) {
                     System.out.println("Please, enter only numbers");

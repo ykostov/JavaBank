@@ -64,7 +64,7 @@ public enum Message {
             return "how much money would you like to insert into the ATM?";
         }
     },
-    CURRENTMONEY {
+    CURRENTMONEYINATM {
         public static final String ANSI_BLUE = "\u001B[34m";
         public static final String ANSI_RESET = "\u001B[0m";
         public String toString() {
@@ -85,6 +85,83 @@ public enum Message {
     SUCCESSACC {
         public String toString() {
             return "Account created successfully!";
+        }
+
+    },
+    USERNAMEREQ {
+        public String toString() {
+            return "Username must be 5-20 symbols";
+        }
+
+    },
+    PASSREQ {
+        public String toString() {
+            return "password must contain at least one lowercase character, one uppercase character, one digit, one special character, and a length between 8 to 20";
+        }
+
+    },
+    ENTERCURR {
+        public String toString() {
+            return "Enter currency - BGN or  RSD";
+        }
+
+    },
+    NOACCOUNT {
+        public String toString() {
+            return "You have selected an account you do not have!";
+        }
+
+    },
+    WHERETODOOPERATION {
+        public String toString() {
+            return "In which account do you want to do this operation? (1 for acc1, 2 for acc2 or 3 for acc3";
+        }
+    },
+    THECHOSENACCHAVE {
+        public String toString() {
+            return "The chosen account have:";
+        }
+
+    },
+    ENTERMONEY {
+        public String toString() {
+            return "Please, enter how much money do you want";
+        }
+
+    },
+    MOREMONEY {
+        public String toString() {
+            return "You have selected more money that you have in ATM/Account";
+        }
+
+    },
+    SUCCESSOPERATION {
+        public String toString() {
+            return "Operation was successful";
+        }
+
+    },
+    WRONG {
+        public String toString() {
+            return "Something went wrong";
+        }
+
+    },
+    BIGERROR {
+        public String toString() {
+            return "You either don't have money in your ATM, or the currency of it and of the account does not matches. You can choose different account, import money in ATM with the right currency or change currency of account";
+        }
+
+    },
+    BLOCKEDACC {
+        public String toString() {
+            return "your account is BLOCKED! Please, contact with admin to fix this. :(";
+        }
+
+    },
+    HOWMUCHTOWITHDRAW {
+        public String toString() {
+            return "how much do you want to withdraw?";
         }
 
     };
