@@ -92,94 +92,59 @@ public class Account {
     }
 
     private void importMoneyInAccount() throws IOException {
-        if (fileCount == 0) {
-            System.out.println(Message.NOACCOUNT);
-        }
-        else {
+        if (fileCount == 0) { System.out.println(Message.NOACCOUNT); } else {
             System.out.println(Message.WHERETODOOPERATION);
-            Scanner scan = new Scanner(System.in);
             String accountNumber = scan.nextLine();
-            if (Integer.parseInt(accountNumber) > fileCount) {
-                System.out.println(Message.NOACCOUNT);
-            } else {
-
+            if (Integer.parseInt(accountNumber) > fileCount) { System.out.println(Message.NOACCOUNT);}
+            else {
                 BigDecimal moneyInAccount = getAccountMoney(Extranet.getCurrentUserName(), accountNumber);
                 String currencyInAccount = getAccountCurrency(Extranet.getCurrentUserName(), accountNumber);
                 String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
-
                 if (blockedStatus.startsWith("free")) {
-
-
-//                System.out.println("You have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
-                System.out.println(Message.CURRENTMONEYINATM + "" + Message.THECHOSENACCHAVE + "" + moneyInAccount + currencyInAccount + Message.ENTERMONEY);
+                    System.out.println(Message.CURRENTMONEYINATM + "" + Message.THECHOSENACCHAVE + "" + moneyInAccount + currencyInAccount + Message.ENTERMONEY);
 
                 if (ATM.getCurrencyInATM().equals(currencyInAccount)) {
                     String moneyToImport = scan.nextLine();
                     if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
                         System.out.println(Message.MOREMONEY);
                     } else {
-                        try {
+
                             BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
-                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount + "\r\n" + "free");
-                            output.close();
+                            writeDataInAccount("money", String.valueOf(newMoney), Extranet.getCurrentUserName(), accountNumber);
                             ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
                             System.out.println(Message.SUCCESSOPERATION);
-                        } catch (Exception e) {
-                            System.out.println(Message.WRONG + e.toString());
-                        }
-
-                    }
-                } else {
-                    System.out.println(Message.BIGERROR);
-                }
-            } else
-                {
-                    System.out.println(Message.BLOCKEDACC);
-                }
+                  }
+                } else { System.out.println(Message.BIGERROR); }
+            } else { System.out.println(Message.BLOCKEDACC); }
 
         }
-
-        }
-
+      }
     }
 
     private void withdrawMoneyFromAccount() throws IOException {
-        if (fileCount == 0) {
-            System.out.println(Message.NOACCOUNT);
-        }
-        else {
+        if (fileCount == 0) { System.out.println(Message.NOACCOUNT); }  else {
             System.out.println(Message.WHERETODOOPERATION);
-            Scanner scan = new Scanner(System.in);
             String accountNumber = scan.nextLine();
-            if (Integer.parseInt(accountNumber) > fileCount) {
-                System.out.println(Message.NOACCOUNT);
-            } else {
-
-                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt"));
-                BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
-                String currencyInAccount = lines.get(1);
-                String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
-
-                if (blockedStatus.startsWith("free"))
-                {
-
-                while (true) {
+            if (Integer.parseInt(accountNumber) > fileCount) { System.out.println(Message.NOACCOUNT); }
+            else {
+                    BigDecimal moneyInAccount = getAccountMoney(Extranet.getCurrentUserName(), accountNumber);
+                    String currencyInAccount = getAccountCurrency(Extranet.getCurrentUserName(), accountNumber);
+                    String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
+                if (blockedStatus.startsWith("free")) {
+                  while (true) {
                     System.out.println(Message.THECHOSENACCHAVE + " " + moneyInAccount + " " + currencyInAccount);
-
                     if (ATM.getCurrencyInATM().equals(currencyInAccount) || ATM.getCurrencyInATM().equals("")) {
-
                         System.out.println(Message.HOWMUCHTOWITHDRAW);
                         String moneyToWithdraw = scan.nextLine();
-                        if (Double.parseDouble(moneyToWithdraw) > Double.parseDouble(lines.get(0))) {
+                        if (Double.parseDouble(moneyToWithdraw) > moneyInAccount.doubleValue()) {
                             System.out.println(Message.MOREMONEY);
                             continue;
                         }
                         try {
                             BigDecimal newMoneyInAccount = moneyInAccount.subtract(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw)));
-                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoneyInAccount) + "\r\n" + currencyInAccount.toUpperCase());
-                            output.close();
+
+                            writeDataInAccount("money", String.valueOf(newMoneyInAccount), Extranet.getCurrentUserName(), accountNumber);
+
                             if (ATM.getMoneyATM() == null) {
                                 ATM.setMoneyATM(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw)));
                             } else {
@@ -222,7 +187,7 @@ public class Account {
 
             String usernameToTransferMoney = scan.nextLine();
             if (newdb.checkUsername(usernameToTransferMoney)) {
-                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + usernameToTransferMoney + File.separator + "acc1.txt"));
+                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);
                 String blockedStatus = lines.get(2);
@@ -231,7 +196,7 @@ public class Account {
 
 
                         BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToTransfer)));
-                        Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + usernameToTransferMoney + File.separator + "acc1.txt", false);
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
                         output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         System.out.println("Money transferred successfully!");
@@ -263,15 +228,15 @@ public class Account {
         else {
             System.out.println("In which account do you want to change money currency? (1 for acc1, 2 for acc2 or 3 for acc3");
             Scanner scan = new Scanner(System.in);
-            String userInput = scan.nextLine();
-            if (Integer.parseInt(userInput) > fileCount) {
+            String accountNumber = scan.nextLine();
+            if (Integer.parseInt(accountNumber) > fileCount) {
                 System.out.println("you have selected an account that you do not have");
+                return;
             }
 
-            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt"));
-            BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
-            String currencyInAccount = lines.get(1);
-            String blockedStatus = lines.get(2);
+            BigDecimal moneyInAccount = getAccountMoney(Extranet.getCurrentUserName(), accountNumber);
+            String currencyInAccount = getAccountCurrency(Extranet.getCurrentUserName(), accountNumber);
+            String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
 
             if (blockedStatus.startsWith("free")) {
 
@@ -282,7 +247,7 @@ public class Account {
                         try {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(60.11));
                             String newCurrency = "RSD";
-                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
                             output.close();
                             System.out.println("Money successfully exchanged!");
@@ -296,9 +261,10 @@ public class Account {
                         try {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(0.017));
                             String newCurrency = "BGN";
-                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
                             output.close();
+
                             System.out.println("Money successfully exchanged!");
                         } catch (Exception e) {
                             System.out.println("Something went wrong - " + e.toString());
@@ -320,6 +286,7 @@ public class Account {
         String currencyInAccount = getAccountCurrency(username, accountNumber);
         //String blockedStatus = getAccountBlockedStatus(username, accountNumber);
 
+
         Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + username + File.separator + "acc" + accountNumber + ".txt", false);
 
 
@@ -339,6 +306,7 @@ public class Account {
         }
 
 
+
     }
 
     protected boolean ifAccountHasNoMoney(String username, String accountNumber) throws IOException {
@@ -352,24 +320,17 @@ public class Account {
         File account2 = new File(System.getProperty("user.dir") + File.separator + username + File.separator + "acc2.txt");
         File account3 = new File(System.getProperty("user.dir") + File.separator + username + File.separator + "acc3.txt");
 
-        if (accountNumber.equals("1"))
-        {
-            account1.delete();
-            account2.renameTo(new File(account1.getPath()));
-            account3.renameTo(new File(account2.getPath()));
-
-        }
-        else  if (accountNumber.equals("2"))
-        {
-            account2.delete();
-            account3.renameTo(new File(account2.getPath()));
-
-        }
-        else  if (accountNumber.equals("3"))
-        {
-            account3.delete();
-
-
+        switch (accountNumber) {
+            case "1" -> {
+                account1.delete();
+                account2.renameTo(new File(account1.getPath()));
+                account3.renameTo(new File(account2.getPath()));
+            }
+            case "2" -> {
+                account2.delete();
+                account3.renameTo(new File(account2.getPath()));
+            }
+            case "3" -> account3.delete();
         }
     }
 
