@@ -1,25 +1,22 @@
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Locale;
 import java.util.Scanner;
 
 // this menu class is used for all big menus in JavaBank
 
 public class Menu {
+    private static final Scanner scan = new Scanner(System.in);
     public static void mainMenu(Database newdb) throws IOException {
 
         while(true) {
 
             System.out.println(Message.MAINMENU);
-            System.out.println(Message.CURRENTMONEY);
+            System.out.println(Message.CURRENTMONEYINATM);
 
-            Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine();
 
             if (userInput.toLowerCase().trim().startsWith("acc")) {
                 Account acc = new Account();
-                acc.setupAccount(newdb);
+                acc.openAccount(newdb);
             } else if (userInput.startsWith("add mo")) { ATM.addMoney(); }
 
             else if (userInput.toLowerCase().trim().startsWith("exc")) { ATM.exchangeMoney(); }

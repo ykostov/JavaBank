@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,10 +13,6 @@ public class Extranet {
 
     private static String currentUserName;
 
-//    private static BigDecimal moneyATM = BigDecimal.valueOf(0);
-//    private static String currencyInATM = "";
-    private static boolean isAdmin = false;
-
     public static String getCurrentUserName() {
         return currentUserName;
     }
@@ -27,25 +21,6 @@ public class Extranet {
     }
 
 
-//    public static BigDecimal getMoneyATM() {
-//        return moneyATM;
-//    }
-
-//    public static void setMoneyATM(BigDecimal moneyATM) {
-//        Extranet.moneyATM = moneyATM;
-//    }
-
-//    public static String getCurrencyInATM() {
-//        return currencyInATM;
-//    }
-
-//    public static void setCurrencyInATM(String currencyInATM) {
-//        Extranet.currencyInATM = currencyInATM;
-//    }
-
-    public static boolean getIsAdmin() {
-        return isAdmin;
-    }
 
     private static final String passwordPattern =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
@@ -148,11 +123,11 @@ public class Extranet {
 
                 }
                 else
-                    System.out.println("username must be 5-20 symbols");
+                    System.out.println(Message.USERNAMEREQ);
             }
             else
             {
-                System.out.println("password must contain at least one lowercase character, one uppercase character, one digit, one special character, and a length between 8 to 20");
+                System.out.println(Message.PASSREQ);
             }
         }
     }
