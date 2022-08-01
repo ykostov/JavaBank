@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Extranet {
 
     private static String currentUserName;
+
 //    private static BigDecimal moneyATM = BigDecimal.valueOf(0);
 //    private static String currencyInATM = "";
     private static boolean isAdmin = false;
@@ -21,6 +22,10 @@ public class Extranet {
     public static String getCurrentUserName() {
         return currentUserName;
     }
+    public static void setCurrentUserName(String username) {
+        Extranet.currentUserName = username;
+    }
+
 
 //    public static BigDecimal getMoneyATM() {
 //        return moneyATM;
@@ -151,6 +156,7 @@ public class Extranet {
             }
         }
     }
+
 
 
 }
