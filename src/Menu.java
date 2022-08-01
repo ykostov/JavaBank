@@ -27,4 +27,21 @@ public class Menu {
             else if (userInput.startsWith("exit")) { break; }
         }
     }
+
+    public static void adminMenu() throws IOException {
+        System.out.println("hello admin " + Extranet.getCurrentUserName());
+        System.out.println("'block' or 'delete' an account:");
+//        String username = Database.chooseUsername();
+//         int fileCount = acc.getFileCount();
+        Scanner scan = new Scanner(System.in);
+        String adminInput = scan.nextLine().toLowerCase().trim();
+         if (adminInput.startsWith("bl")) {
+               Admin.blockAccount();
+           } else if (adminInput.startsWith("del")) {
+             Admin.deleteAccount();
+               //Admin.delAccount(username);
+           }
+
+
+    }
 }
