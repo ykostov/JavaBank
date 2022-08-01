@@ -17,6 +17,7 @@ public class Account {
     public int getFileCount() {
         return fileCount;
     }
+    Scanner scan = new Scanner(System.in);
 
     // this method checks the amount files in user's dir, viz. accounts
     protected void countAccountsCreatedForUser()
@@ -37,38 +38,44 @@ public class Account {
     public void setupAccount(Database newdb) throws IOException {
       countAccountsCreatedForUser();
       String userInput;
-      if (fileCount > 3)
-      {
-          System.out.println(Message.MAXACC);
-      }
-      else {
-          while(true) {
-
+      boolean tempVar = true;
+          while(tempVar) {
               System.out.println(fileCount + " " + Message.ACCMENU);
-
-
               Scanner scan = new Scanner(System.in);
               userInput = scan.nextLine();
 
-              if (userInput.toLowerCase().trim().startsWith("list")) { listAccounts(); }
-              else if (userInput.toLowerCase().trim().startsWith("create")) { createAccount(); }
-              else if (userInput.toLowerCase().trim().startsWith("import"))
-              {
-                  if (ATM.getMoneyATM() != null)
-                  {
-                      importMoneyInAccount();
-                  } else
-                  {
-                      System.out.println("you do not have money in ATM");
-                  }
 
+              switch (userInput.toLowerCase().trim()) {
+                  case "list" -> listAccounts();
+                  case "create" -> createAccount();
+                  case "import" -> importMoneyInAccount();
+                  case "exchange" -> changeCurrencyOfAccount();
+                  case "withdraw" -> withdrawMoneyFromAccount();
+                  case "transfer" -> transferMoneyToAnotherUser(newdb);
+
+                  case "exit" -> tempVar = false;
               }
-              else if (userInput.toLowerCase().trim().startsWith("with")) { WithdrawMoneyFromAccount(); }
-              else if (userInput.toLowerCase().trim().startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
-              else if (userInput.toLowerCase().trim().startsWith("exch")) { changeCurrencyOfAccount(); }
-              else if (userInput.toLowerCase().trim().startsWith("exit")) { break; }
+
+
+//              if (userInput.toLowerCase().trim().startsWith("list")) { listAccounts(); }
+//              else if (userInput.toLowerCase().trim().startsWith("create")) { createAccount(); }
+//              else if (userInput.toLowerCase().trim().startsWith("import"))
+//              {
+//                  if (ATM.getMoneyATM() != null)
+//                  {
+//                      importMoneyInAccount();
+//                  } else
+//                  {
+//                      System.out.println("you do not have money in ATM");
+//                  }
+//
+//              }
+//              else if (userInput.toLowerCase().trim().startsWith("with")) { withdrawMoneyFromAccount(); }
+//              else if (userInput.toLowerCase().trim().startsWith("transfer")) { transferMoneyToAnotherUser(newdb); }
+//              else if (userInput.toLowerCase().trim().startsWith("exch")) { changeCurrencyOfAccount(); }
+//              else if (userInput.toLowerCase().trim().startsWith("exit")) { break; }
             }
-        }
+
 
     }
 
@@ -85,72 +92,48 @@ public class Account {
 
     // this method creates an Account /file/ in user's directory
     private void createAccount() throws IOException {
-        if (fileCount >= 3)
-        {
-            System.out.println(Message.MAXACC);
-        }
-        else
-        {
-
-            try
-            {
-                String chosenCurrency = "";
-                while(true) {
-
-
-                    System.out.println("Enter currency - BGN or  RSD");
-                    Scanner scan = new Scanner(System.in);
-                    chosenCurrency = scan.nextLine().toUpperCase().trim();
-                    if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
-                        break;
-                    } else {
-                        System.out.println("You have entered something I do not want. Try again..");
-                    }
-                }
-
-            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
-            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ fileCount + ".txt", true);
-            output.write("0" + "\r\n" + chosenCurrency + "\r\n" + "free");
-            output.close();
-            System.out.println(Message.SUCCESSACC);
-            }catch (Exception ex)
-            {
-                // write data to logger
+        if (fileCount >= 3) { System.out.println(Message.MAXACC);} else {
+        String chosenCurrency = "";
+        while(true) {
+            System.out.println("Enter currency - BGN or  RSD");
+            chosenCurrency = scan.nextLine().toUpperCase().trim();
+            if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
+                break;}
+            else {
+                System.out.println("You have entered something I do not want. Try again..");
             }
-
-
+        }
+            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
+            fw.write("0" + "\r\n" + chosenCurrency + "\r\n" + "free");
+            fw.close();
+            System.out.println(Message.SUCCESSACC);
         }
     }
 
     private void importMoneyInAccount() throws IOException {
-
         if (fileCount == 0) {
             System.out.println("You do not have an account.");
         }
         else {
             System.out.println("In which account do you want to import money? (1 for acc1, 2 for acc2 or 3 for acc3");
             Scanner scan = new Scanner(System.in);
-            String userInput = scan.nextLine();
-            if (Integer.parseInt(userInput) > fileCount) {
+            String accountNumber = scan.nextLine();
+            if (Integer.parseInt(accountNumber) > fileCount) {
                 System.out.println("you have selected an account that you do not have");
             } else {
 
-
-
-            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt"));
-            BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
-            String currencyInAccount = lines.get(1);
+            BigDecimal moneyInAccount = getAccountMoney(Extranet.getCurrentUserName(), accountNumber);
+            String currencyInAccount = getAccountCurrency(Extranet.getCurrentUserName(), accountNumber);
+            String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
             System.out.println("You have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. The chosen account have " + moneyInAccount + " " + currencyInAccount + ". Please, enter how much money do you want");
             if (ATM.getCurrencyInATM().equals(currencyInAccount)) {
-
-                String moneyToImport = scan.nextLine();
-
-                if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
+              String moneyToImport = scan.nextLine();
+               if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
                     System.out.println("You want to import more money that you have in ATM");
                 } else {
                     try {
                         BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
-                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt", false);
                         output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount);
                         output.close();
                         ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
@@ -170,7 +153,7 @@ public class Account {
 
     }
 
-    private void WithdrawMoneyFromAccount() throws IOException {
+    private void withdrawMoneyFromAccount() throws IOException {
         if (fileCount == 0) {
             System.out.println("You do not have an account.");
         }
@@ -317,16 +300,44 @@ public class Account {
     }
 
 
-    public void blockAccount(String username, String accountNumber) throws IOException {
+    public void writeDataInAccount(String typeOfChange, String changer, String username, String accountNumber) throws IOException {
 
         BigDecimal moneyInAccount = getAccountMoney(username, accountNumber);
         String currencyInAccount = getAccountCurrency(username, accountNumber);
-        String blockedStatus = getAccountBlockedStatus(username, accountNumber);
+        //String blockedStatus = getAccountBlockedStatus(username, accountNumber);
 
-        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + username + "/" + "acc"+ accountNumber + ".txt", false);
-        output.write(moneyInAccount + "\r\n" + currencyInAccount + "\r\n" + "blocked");
-        output.close();
+        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt", false);
+
+
+        switch (typeOfChange) {
+            case "money" -> {
+                output.write(changer + "\r\n" + currencyInAccount + "\r\n" + "free");
+                output.close();
+            }
+            case "currency" -> {
+                output.write(moneyInAccount + "\r\n" + changer + "\r\n" + "free");
+                output.close();
+            }
+            case "block" -> {
+                output.write(moneyInAccount + "\r\n" + currencyInAccount + "\r\n" + changer);
+                output.close();
+            }
+        }
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private String getAccountBlockedStatus(String username, String accountNumber) throws IOException {
         List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt"));
