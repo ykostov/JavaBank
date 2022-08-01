@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Account {
 
     private int fileCount;
+    public boolean DoesUserHaveAnAccount = true; //glupost
 
     public int getFileCount() {
         return fileCount;
@@ -24,7 +25,7 @@ public class Account {
     {
         try
         {
-            File directory=new File(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName());
+            File directory=new File(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName());
             fileCount= directory.list().length;
         } catch (NullPointerException e)
         {
@@ -60,9 +61,13 @@ public class Account {
     protected void listAccounts() throws IOException {
         for (int i = 1; i<=fileCount; i++)
         {
+            DoesUserHaveAnAccount = true; //glupost
             System.out.print("Account"+i + "=");
-            List<String> accounts = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ i + ".txt"));
+            List<String> accounts = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc"+ i + ".txt"));
             System.out.println(accounts);
+        }
+        if (!DoesUserHaveAnAccount) {
+            System.out.println("no accounts found");
         }
     }
 
@@ -79,7 +84,7 @@ public class Account {
                 System.out.println(Message.BADINPUT);
             }
         }
-            FileWriter fw = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
+            FileWriter fw = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
             fw.write("0" + "\r\n" + chosenCurrency + "\r\n" + "free");
             fw.close();
             System.out.println(Message.SUCCESSACC);
@@ -115,7 +120,7 @@ public class Account {
                     } else {
                         try {
                             BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
-                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount + "\r\n" + "free");
                             output.close();
                             ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
@@ -151,7 +156,7 @@ public class Account {
                 System.out.println(Message.NOACCOUNT);
             } else {
 
-                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt"));
+                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);
                 String blockedStatus = getAccountBlockedStatus(Extranet.getCurrentUserName(), accountNumber);
@@ -172,7 +177,7 @@ public class Account {
                         }
                         try {
                             BigDecimal newMoneyInAccount = moneyInAccount.subtract(BigDecimal.valueOf(Double.parseDouble(moneyToWithdraw)));
-                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + accountNumber + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoneyInAccount) + "\r\n" + currencyInAccount.toUpperCase());
                             output.close();
                             if (ATM.getMoneyATM() == null) {
@@ -217,7 +222,7 @@ public class Account {
 
             String usernameToTransferMoney = scan.nextLine();
             if (newdb.checkUsername(usernameToTransferMoney)) {
-                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
+                List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + usernameToTransferMoney + File.separator + "acc1.txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);
                 String blockedStatus = lines.get(2);
@@ -226,7 +231,7 @@ public class Account {
 
 
                         BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToTransfer)));
-                        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
+                        Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + usernameToTransferMoney + File.separator + "acc1.txt", false);
                         output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         System.out.println("Money transferred successfully!");
@@ -263,7 +268,7 @@ public class Account {
                 System.out.println("you have selected an account that you do not have");
             }
 
-            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt"));
+            List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt"));
             BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
             String currencyInAccount = lines.get(1);
             String blockedStatus = lines.get(2);
@@ -277,7 +282,7 @@ public class Account {
                         try {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(60.11));
                             String newCurrency = "RSD";
-                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
                             output.close();
                             System.out.println("Money successfully exchanged!");
@@ -291,7 +296,7 @@ public class Account {
                         try {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(0.017));
                             String newCurrency = "BGN";
-                            Writer output = new FileWriter(System.getProperty("user.dir") + "/" + Extranet.getCurrentUserName() + "/" + "acc" + userInput + ".txt", false);
+                            Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + userInput + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
                             output.close();
                             System.out.println("Money successfully exchanged!");
@@ -315,7 +320,7 @@ public class Account {
         String currencyInAccount = getAccountCurrency(username, accountNumber);
         //String blockedStatus = getAccountBlockedStatus(username, accountNumber);
 
-        Writer output = new FileWriter(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt", false);
+        Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + username + File.separator + "acc" + accountNumber + ".txt", false);
 
 
         switch (typeOfChange) {
@@ -343,9 +348,9 @@ public class Account {
 
     protected void deleteAccount(String username, String accountNumber) {
 
-        File account1 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc1.txt");
-        File account2 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc2.txt");
-        File account3 = new File(System.getProperty("user.dir") + "/" + username + "/" + "acc3.txt");
+        File account1 = new File(System.getProperty("user.dir") + File.separator + username + File.separator + "acc1.txt");
+        File account2 = new File(System.getProperty("user.dir") + File.separator + username + File.separator + "acc2.txt");
+        File account3 = new File(System.getProperty("user.dir") + File.separator + username + File.separator + "acc3.txt");
 
         if (accountNumber.equals("1"))
         {
@@ -391,7 +396,7 @@ public class Account {
     }
 
     private BigDecimal getAccountMoney(String username, String accountNumber) throws IOException {
-        List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + username + "/" + "acc" + accountNumber + ".txt"));
+        List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + username + File.separator + "acc" + accountNumber + ".txt"));
         return BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
     }
 
