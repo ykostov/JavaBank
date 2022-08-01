@@ -1,67 +1,57 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+
+    private static final boolean isAdmin = false;
     public static void main(String[] args) throws IOException {
 
-        /* TODO:
-
-            ## Функционалности
-            * Логин система за клиенти и служители
-            * Клиенти
-                * Информация за клиента
-                * VIP клиенти
-                * Теглене на пари
-                * Внасяне на пари
-                * Прехвърляне между вътрешни сметки
-                * Прехвърляне към сметка на друг потребител
-                * Кредитни карти
-                * Сметки (2+)
-                * Валути (2+)
-                * Езици (2+)
-            * Служители
-                * Информация за служителят
-                * Администриране на потребителите
-                * Изтриване на сметка
-                * Блокиране на сметка
-                * Конфигурация на лихвеният процент
-            * База (памет / файл)
-            * Конфигурационнен файл
-                * Дебъг режим (показва повече съобщения) **записва в отделен файл**
-                * Смяна на базата
-                * Локация на файлът за базата
-
-         */
 
         Database newdb = new Database("users");
         newdb.createDb();
+
+        Menu.ASCII();
+
+
+        openMainMenu(newdb);
+
+
+    }
+
+    private static void openMainMenu(Database newdb) throws IOException {
+        while (true)
+        {
 
         System.out.println(Message.WELCOME);  // Hello World
         Scanner scan = new Scanner(System.in);
         String userInput = scan.nextLine();
 
-        while (true)
-        {
-            if (userInput.startsWith("log"))
+            if (userInput.toLowerCase().trim().startsWith("log"))
             {
-                Extranet.login(newdb);
-                break;
+                Extranet.login(newdb, isAdmin);
+
             }
-            else if (userInput.startsWith("reg"))
+            else if (userInput.toLowerCase().trim().startsWith("reg"))
             {
-                Extranet.register(newdb);
-                break;
+                Extranet.register(newdb, isAdmin);
+
             }
-            else if (userInput.startsWith("exit"))
+            else if (userInput.toLowerCase().trim().startsWith("admin"))
+            {
+                Admin.main(newdb);
+
+            }
+            else if (userInput.toLowerCase().trim().startsWith("exit"))
             {
                 break;
             }
             else
             {
-                System.out.println("I do not understand you. Please, try again. (login or register)");
+                System.out.println(Message.BADINPUT);
             }
         }
-
-
     }
+
+
 }
