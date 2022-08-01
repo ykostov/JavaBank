@@ -1,7 +1,4 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.Scanner;
 
 public class Admin {
@@ -47,7 +44,7 @@ public class Admin {
 //        Scanner scan = new Scanner(System.in);
 //        String userInput = scan.nextLine();
         System.out.println("got here1");
-        acc.blockAccount("mitko", "1");
+        acc.writeDataInAccount("block", "blocked", "mitko", "1");
     }
 
 
