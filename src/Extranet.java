@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +43,7 @@ public class Extranet {
         try
         {
             // creation of new client dir.
-            Path path = Paths.get(System.getProperty("user.dir") + "/" + usernameInput);
+            Path path = Paths.get(System.getProperty("user.dir") + File.separator + usernameInput);
             Files.createDirectories(path);
             currentUserName = usernameInput;
             if (isAdmin)
