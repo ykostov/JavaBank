@@ -26,19 +26,40 @@ public class Menu {
     }
 
     public static void adminMenu() throws IOException {
-        System.out.println("hello admin " + Extranet.getCurrentUserName());
-        System.out.println("'block' or 'delete' an account:");
-//        String username = Database.chooseUsername();
-//         int fileCount = acc.getFileCount();
-        Scanner scan = new Scanner(System.in);
-        String adminInput = scan.nextLine().toLowerCase().trim();
-         if (adminInput.startsWith("bl")) {
-               Admin.blockAccount();
-           } else if (adminInput.startsWith("del")) {
-             Admin.deleteAccount();
-               //Admin.delAccount(username);
-           }
+        while(true)
+        {
+            System.out.println("hello admin " + Extranet.getCurrentUserName());
+            System.out.println("'block' or 'delete' or 'exit' an account:");
+            Scanner scan = new Scanner(System.in);
+            String adminInput = scan.nextLine().toLowerCase().trim();
+            if (adminInput.startsWith("bl")) {
+                Admin.blockAccount();
+            } else if (adminInput.startsWith("del")) {
+                Admin.deleteAccount();
+            }
+            else if (adminInput.startsWith("exit"))
+            {
+                break;
+            }
+        }
 
+    }
 
+    public static void ASCII()
+    {
+        System.out.println("\n" +
+                "\n" +
+                "    /$$$$$                                /$$$$$$$                      /$$      \n" +
+                "   |__  $$                               | $$__  $$                    | $$      \n" +
+                "      | $$  /$$$$$$  /$$    /$$  /$$$$$$ | $$  \\ $$  /$$$$$$  /$$$$$$$ | $$   /$$\n" +
+                "      | $$ |____  $$|  $$  /$$/ |____  $$| $$$$$$$  |____  $$| $$__  $$| $$  /$$/\n" +
+                " /$$  | $$  /$$$$$$$ \\  $$/$$/   /$$$$$$$| $$__  $$  /$$$$$$$| $$  \\ $$| $$$$$$/ \n" +
+                "| $$  | $$ /$$__  $$  \\  $$$/   /$$__  $$| $$  \\ $$ /$$__  $$| $$  | $$| $$_  $$ \n" +
+                "|  $$$$$$/|  $$$$$$$   \\  $/   |  $$$$$$$| $$$$$$$/|  $$$$$$$| $$  | $$| $$ \\  $$\n" +
+                " \\______/  \\_______/    \\_/     \\_______/|_______/  \\_______/|__/  |__/|__/  \\__/\n" +
+                "                                                                                 \n" +
+                "                                                                                 \n" +
+                "                                                                                 \n" +
+                "\n");
     }
 }
