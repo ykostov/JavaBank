@@ -164,5 +164,11 @@ public enum Message {
             return "how much do you want to withdraw?";
         }
 
+    },
+    SEPARATOR {
+        public String toString() {
+            return "---------------------------------------------------";
+        }
+
     };
 }

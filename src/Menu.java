@@ -8,7 +8,7 @@ public class Menu {
     public static void mainMenu(Database newdb) throws IOException {
 
         while(true) {
-
+            System.out.println(Message.SEPARATOR);
             System.out.println(Message.MAINMENU);
             System.out.println(Message.CURRENTMONEYINATM);
 
@@ -16,6 +16,7 @@ public class Menu {
 
             if (userInput.toLowerCase().trim().startsWith("acc")) {
                 Account acc = new Account();
+                System.out.println(Message.SEPARATOR);
                 acc.openAccount(newdb);
             } else if (userInput.startsWith("add mo")) { ATM.addMoney(); }
 
@@ -26,6 +27,7 @@ public class Menu {
     }
 
     public static void adminMenu() throws IOException {
+        System.out.println(Message.SEPARATOR);
         while(true)
         {
             System.out.println("hello admin " + Extranet.getCurrentUserName());

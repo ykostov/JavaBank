@@ -41,6 +41,7 @@ public class Account {
       String userInput;
       boolean tempVar = true;
           while(tempVar) {
+              System.out.println(Message.SEPARATOR);
               System.out.println(fileCount + " " + Message.ACCMENU);
               userInput = scan.nextLine();
 
@@ -67,13 +68,13 @@ public class Account {
             System.out.println(accounts);
         }
         if (!DoesUserHaveAnAccount) {
-            System.out.println("no accounts found");
+            System.err.println("no accounts found");
         }
     }
 
     // this method creates an Account /file/ in user's directory
     private void createAccount() throws IOException {
-        if (fileCount >= 3) { System.out.println(Message.MAXACC);} else {
+        if (fileCount >= 3) { System.err.println(Message.MAXACC);} else {
         String chosenCurrency = "";
         while(true) {
             System.out.println(Message.ENTERCURR);
@@ -81,7 +82,7 @@ public class Account {
             if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
                 break;}
             else {
-                System.out.println(Message.BADINPUT);
+                System.err.println(Message.BADINPUT);
             }
         }
             FileWriter fw = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + "/" + "acc"+ ++fileCount + ".txt");
@@ -92,10 +93,10 @@ public class Account {
     }
 
     private void importMoneyInAccount() throws IOException {
-        if (fileCount == 0) { System.out.println(Message.NOACCOUNT); } else {
+        if (fileCount == 0) { System.err.println(Message.NOACCOUNT); } else {
             System.out.println(Message.WHERETODOOPERATION);
             String accountNumber = scan.nextLine();
-            if (Integer.parseInt(accountNumber) > fileCount) { System.out.println(Message.NOACCOUNT);}
+            if (Integer.parseInt(accountNumber) > fileCount) { System.err.println(Message.NOACCOUNT);}
             else {
                 BigDecimal moneyInAccount = getAccountMoney(Extranet.getCurrentUserName(), accountNumber);
                 String currencyInAccount = getAccountCurrency(Extranet.getCurrentUserName(), accountNumber);
@@ -106,7 +107,7 @@ public class Account {
                 if (ATM.getCurrencyInATM().equals(currencyInAccount)) {
                     String moneyToImport = scan.nextLine();
                     if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
-                        System.out.println(Message.MOREMONEY);
+                        System.err.println(Message.MOREMONEY);
                     } else {
 
                             BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
@@ -114,15 +115,15 @@ public class Account {
                             ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
                             System.out.println(Message.SUCCESSOPERATION);
                   }
-                } else { System.out.println(Message.BIGERROR); }
-            } else { System.out.println(Message.BLOCKEDACC); }
+                } else { System.err.println(Message.BIGERROR); }
+            } else { System.err.println(Message.BLOCKEDACC); }
 
         }
       }
     }
 
     private void withdrawMoneyFromAccount() throws IOException {
-        if (fileCount == 0) { System.out.println(Message.NOACCOUNT); }  else {
+        if (fileCount == 0) { System.err.println(Message.NOACCOUNT); }  else {
             System.out.println(Message.WHERETODOOPERATION);
             String accountNumber = scan.nextLine();
             if (Integer.parseInt(accountNumber) > fileCount) { System.out.println(Message.NOACCOUNT); }
@@ -137,7 +138,7 @@ public class Account {
                         System.out.println(Message.HOWMUCHTOWITHDRAW);
                         String moneyToWithdraw = scan.nextLine();
                         if (Double.parseDouble(moneyToWithdraw) > moneyInAccount.doubleValue()) {
-                            System.out.println(Message.MOREMONEY);
+                            System.err.println(Message.MOREMONEY);
                             continue;
                         }
                         try {
@@ -154,10 +155,10 @@ public class Account {
                             System.out.println(Message.SUCCESSOPERATION);
                             break;
                         } catch (Exception e) {
-                            System.out.println(Message.WRONG + e.toString());
+                            System.err.println(Message.WRONG + e.toString());
                         }
                     } else {
-                        System.out.println(Message.BIGERROR);
+                        System.err.println(Message.BIGERROR);
                         break;
                     }
                 }
@@ -165,7 +166,7 @@ public class Account {
             }
             else
             {
-                System.out.println("your account is BLOCKED. .......");
+                System.err.println(Message.BLOCKEDACC);
             }
       }
     }
@@ -174,7 +175,6 @@ public class Account {
 
     private void transferMoneyToAnotherUser(Database newdb) throws IOException {
         System.out.println("money in ATM: " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + ". Enter how much would you want to transfer");
-        Scanner scan = new Scanner(System.in);
         String moneyToTransfer = scan.nextLine();
 
         if (Double.parseDouble(moneyToTransfer) > ATM.getMoneyATM().doubleValue())
@@ -204,16 +204,16 @@ public class Account {
                     }
                     else
                     {
-                        System.out.println("username's account is BLOCKED....");
+                        System.err.println(Message.BLOCKEDACC);
                     }
                 } else {
-                    System.out.println("Your currency does not matches with the currency in the account of the other user. Please, change your currency in your ATM before proceeding. ");
+                    System.err.println("Your currency does not matches with the currency in the account of the other user. Please, change your currency in your ATM before proceeding. ");
                 }
 
             }
             else
             {
-                System.out.println("Username not found!");
+                System.err.println("Username not found!");
             }
 
         }
@@ -227,7 +227,6 @@ public class Account {
         }
         else {
             System.out.println("In which account do you want to change money currency? (1 for acc1, 2 for acc2 or 3 for acc3");
-            Scanner scan = new Scanner(System.in);
             String accountNumber = scan.nextLine();
             if (Integer.parseInt(accountNumber) > fileCount) {
                 System.out.println("you have selected an account that you do not have");
