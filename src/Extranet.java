@@ -15,6 +15,8 @@ public class Extranet {
     private static String currentUserName;
     private static String currentLanguage = "en";
 
+    private static int currentPercent = 2;
+
     public static String getCurrentUserName() {
         return currentUserName;
     }
@@ -28,6 +30,14 @@ public class Extranet {
 
     public static void setCurrentLanguage(String currentLanguage) {
         Extranet.currentLanguage = currentLanguage;
+    }
+
+    public static int getCurrentPercent() {
+        return currentPercent;
+    }
+
+    public static void setCurrentPercent(int currentPercent) {
+        Extranet.currentPercent = currentPercent;
     }
 
     private static final String passwordPattern =

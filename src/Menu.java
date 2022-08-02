@@ -32,13 +32,15 @@ public class Menu {
         while(true)
         {
             System.out.println("hello admin " + Extranet.getCurrentUserName());
-            System.out.println("'block' or 'delete' or 'exit' an account:");
+            System.out.println("'block' or 'delete' or 'percent' or 'exit' an account:");
             Scanner scan = new Scanner(System.in);
             String adminInput = scan.nextLine().toLowerCase().trim();
             if (adminInput.startsWith("bl")) {
                 Admin.blockAccount();
             } else if (adminInput.startsWith("del")) {
                 Admin.deleteAccount();
+            } else if (adminInput.startsWith("per")) {
+                Admin.choosePercent();
             }
             else if (adminInput.startsWith("exit"))
             {
