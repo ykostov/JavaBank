@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class Extranet {
 
     private static String currentUserName;
+    private static String currentLanguage = "en";
 
     public static String getCurrentUserName() {
         return currentUserName;
@@ -21,7 +22,13 @@ public class Extranet {
         Extranet.currentUserName = username;
     }
 
+    public static String getCurrentLanguage() {
+        return currentLanguage;
+    }
 
+    public static void setCurrentLanguage(String currentLanguage) {
+        Extranet.currentLanguage = currentLanguage;
+    }
 
     private static final String passwordPattern =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
@@ -77,22 +84,23 @@ public class Extranet {
 
         while(true) {
 
-            System.out.print(Message.USERNAME);
+            System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-username"));
             usernameInput = scan.nextLine();
             if (usernameInput.toLowerCase().trim().startsWith("exi"))
             {
                 break;
             }
-            System.out.print(Message.PASSWD);
+            System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-password"));
             passwdInput = scan.nextLine();
 
             if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
-                System.out.println(Message.SUCCESSLOGIN);
+                System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-successLogin"));
+                Extranet.setCurrentUserName(usernameInput);
 
                 if (createDirForUserAndPassToMainMenu(newdb, usernameInput, isAdmin)) break;
             }
             else {
-                System.out.println(Message.NOSUCCESSLOGIN);
+                System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-noSuccessLogin"));
             }
         }
     }
@@ -102,11 +110,11 @@ public class Extranet {
 
         Scanner scan = new Scanner(System.in);
         while(true) {
-            System.out.print(Message.USERNAME);
+            System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-username"));
             String usernameInput = scan.nextLine();
-            System.out.print(Message.PASSWD);
+            System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-password"));
             String passwdInput = scan.nextLine();
-            System.out.print(Message.EMAIL);
+            System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-email"));
             String emailInput = scan.nextLine();
 
             if (isPasswordValid(passwdInput)) {
@@ -114,21 +122,22 @@ public class Extranet {
 
 
                     if ((newdb.checkUsername(usernameInput))) {
-                        System.out.println(Message.TAKEN);
+                        System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-taken"));
                     } else {
                         newdb.addData(usernameInput, passwdInput, emailInput);
-                        System.out.println(Message.SUCCESSREGISTER);
+                        System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-successRegister"));
+                        Extranet.setCurrentUserName(usernameInput);
                         if (createDirForUserAndPassToMainMenu(newdb, usernameInput, isAdmin)) break;
 
                     }
 
                 }
                 else
-                    System.out.println(Message.USERNAMEREQ);
+                    System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-usernameReq"));
             }
             else
             {
-                System.out.println(Message.PASSREQ);
+                System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-passReq"));
             }
         }
     }

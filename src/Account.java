@@ -41,8 +41,8 @@ public class Account {
       String userInput;
       boolean tempVar = true;
           while(tempVar) {
-              System.out.println(Message.SEPARATOR);
-              System.out.println(fileCount + " " + Message.ACCMENU);
+              System.out.println(Messages.getMessage("separator"));
+              System.out.println(getFileCount() + Messages.getMessage(Extranet.getCurrentLanguage() + "-accMenu"));
               userInput = scan.nextLine();
 
               switch (userInput.toLowerCase().trim()) {

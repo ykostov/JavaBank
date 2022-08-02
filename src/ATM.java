@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class ATM {
 
+    private static final Scanner scan = new Scanner(System.in);
     private static BigDecimal moneyATM = BigDecimal.valueOf(0);
     private static String currencyInATM = "";
 
@@ -24,40 +25,38 @@ public class ATM {
 
     public static void addMoney()
     {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter currency: BGN or RSD?");
+        System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-enterCurrency"));
         String chosenCurrency;
         chosenCurrency = scan.nextLine().toUpperCase().trim();
-        if (chosenCurrency.equals("BGN") || chosenCurrency.equals("RSD")) {
+        if (chosenCurrency.toLowerCase().trim().startsWith("bg") || chosenCurrency.toLowerCase().trim().startsWith("rs")) {
 
             while (true) {
 
-                System.out.println(Message.HOWMUCH);
+                System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-howMuchToInsert"));
                 String moneyInput1 = scan.nextLine();
                 try {
                     double moneyInput = Double.parseDouble(moneyInput1);
                     ATM.setMoneyATM(BigDecimal.valueOf(moneyInput));
                     ATM.setCurrencyInATM(chosenCurrency);
-                    System.out.println(Message.CURRENTMONEYINATM + "" + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM());
+                    System.out.println("You currently have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. ");
                     break;
                 } catch (Exception e) {
-                    System.out.println("Please, enter only numbers");
+                    System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-onlyNumbers"));
                 }
             }
         }
         else
         {
-            System.out.println("Please try again");
+            System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-tryAgain"));
         }
     }
 
     public static void exchangeMoney()
     {
-        Scanner scan = new Scanner(System.in);
 
         if (ATM.getCurrencyInATM().equalsIgnoreCase("BGN"))
         {
-            System.out.println("You currency in ATM is set to BGN. You have " + ATM.getMoneyATM() + " BGN money. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
+            System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-currencyInBgn"));
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
@@ -68,7 +67,7 @@ public class ATM {
         }
         else if (ATM.getCurrencyInATM().equalsIgnoreCase("RSD"))
         {
-            System.out.println("You currency in ATM is set to RSD. You have " + ATM.getMoneyATM() + " RSD money. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+            System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-currencyInRsd"));
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
@@ -79,7 +78,7 @@ public class ATM {
         }
         else
         {
-            System.out.println("you don't have money in ATM");
+            System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-noMoneyInAtm"));
         }
     }
 }
