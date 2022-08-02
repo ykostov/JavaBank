@@ -8,14 +8,16 @@ public class Menu {
     public static void mainMenu(Database newdb) throws IOException {
 
         while(true) {
-
+            System.out.println(Messages.getMessage("separator"));
+         // System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-mainMenu"));
             System.out.println(Message.MAINMENU);
-            System.out.println(Message.CURRENTMONEYINATM);
+            System.out.println("You currently have " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + " money in ATM. ");
 
             String userInput = scan.nextLine();
 
             if (userInput.toLowerCase().trim().startsWith("acc")) {
                 Account acc = new Account();
+                System.out.println(Messages.getMessage("separator"));
                 acc.openAccount(newdb);
             } else if (userInput.startsWith("add mo")) { ATM.addMoney(); }
 
@@ -26,6 +28,7 @@ public class Menu {
     }
 
     public static void adminMenu() throws IOException {
+        System.out.println(Message.SEPARATOR);
         while(true)
         {
             System.out.println("hello admin " + Extranet.getCurrentUserName());
