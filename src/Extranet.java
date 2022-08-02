@@ -30,6 +30,7 @@ public class Extranet {
 
     public static void setCurrentLanguage(String currentLanguage) {
         Extranet.currentLanguage = currentLanguage;
+        debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Language changed to " + currentLanguage);
     }
 
     public static int getCurrentPercent() {
@@ -65,10 +66,12 @@ public class Extranet {
             currentUserName = usernameInput;
             if (isAdmin)
             {
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Admin logged - " + usernameInput);
                 Menu.adminMenu();
             }
             else
             {
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "User logged - " + usernameInput);
                 Menu.mainMenu(newdb);
             }
 
@@ -76,7 +79,7 @@ public class Extranet {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Very bad at createDirForUserAndPassToMainMenu: " + e.getMessage());
         }
         return false;
     }
@@ -111,6 +114,7 @@ public class Extranet {
             }
             else {
                 System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-noSuccessLogin"));
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Username with password are not found in DB");
             }
         }
     }

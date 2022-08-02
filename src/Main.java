@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -11,11 +12,10 @@ public class Main {
         Database newdb = new Database("users");
         newdb.createDb();
 
-//        Menu.ASCII();
+        Menu.ASCII();
 
         Messages.setupMap();
         openMainMenu(newdb);
-
 
     }
 
@@ -44,38 +44,33 @@ public class Main {
     }
 
     private static void openMainMenu(Database newdb) throws IOException {
-        while (true)
-        {
+        while (true) {
 
-        System.out.println(Messages.getMessage(Extranet.getCurrentLanguage()+"-welcome"));  // Hello World
-        String userInput = scan.nextLine();
+            System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-welcome"));  // Hello World
+            String userInput = scan.nextLine();
+            try {
 
-            if (userInput.toLowerCase().trim().startsWith("log"))
-            {
-                Extranet.login(newdb, isAdmin);
 
-            }
-            else if (userInput.toLowerCase().trim().startsWith("reg"))
-            {
-                Extranet.register(newdb, isAdmin);
+                if (userInput.toLowerCase().trim().startsWith("log")) {
+                    Extranet.login(newdb, isAdmin);
 
-            }
-            else if (userInput.toLowerCase().trim().startsWith("admin"))
-            {
-                Admin.main(newdb);
+                } else if (userInput.toLowerCase().trim().startsWith("reg")) {
+                    Extranet.register(newdb, isAdmin);
 
-            }
-            else if (userInput.toLowerCase().trim().startsWith("lang"))
+                } else if (userInput.toLowerCase().trim().startsWith("admin")) {
+                    Admin.main(newdb);
+
+                } else if (userInput.toLowerCase().trim().startsWith("lang")) {
+                    chooseLanguage();
+                } else if (userInput.toLowerCase().trim().startsWith("exit")) {
+                    break;
+                } else {
+                    System.out.println(Message.BADINPUT);
+                    debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Bad input at openMainMenuBad");
+                }
+            } catch (Exception e)
             {
-                chooseLanguage();
-            }
-            else if (userInput.toLowerCase().trim().startsWith("exit"))
-            {
-                break;
-            }
-            else
-            {
-                System.out.println(Message.BADINPUT);
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Very very bad: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             }
         }
     }
