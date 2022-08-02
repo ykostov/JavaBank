@@ -30,6 +30,7 @@ public class Extranet {
 
     public static void setCurrentLanguage(String currentLanguage) {
         Extranet.currentLanguage = currentLanguage;
+        debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Language changed to " + currentLanguage);
     }
 
     public static int getCurrentPercent() {
@@ -65,10 +66,12 @@ public class Extranet {
             currentUserName = usernameInput;
             if (isAdmin)
             {
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Admin logged - " + usernameInput);
                 Menu.adminMenu();
             }
             else
             {
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "User logged - " + usernameInput);
                 Menu.mainMenu(newdb);
             }
 

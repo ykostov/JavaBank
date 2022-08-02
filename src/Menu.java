@@ -18,6 +18,7 @@ public class Menu {
             if (userInput.toLowerCase().trim().startsWith("acc")) {
                 Account acc = new Account();
                 System.out.println(Messages.getMessage("separator"));
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Account opened by user - " + Extranet.getCurrentUserName());
                 acc.openAccount(newdb);
             } else if (userInput.startsWith("add mo")) { ATM.addMoney(); }
 

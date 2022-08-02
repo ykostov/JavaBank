@@ -66,9 +66,11 @@ public class Account {
             System.out.print("Account"+i + "=");
             List<String> accounts = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc"+ i + ".txt"));
             System.out.println(accounts);
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Accounts listed by user - " + Extranet.getCurrentUserName());
         }
         if (!DoesUserHaveAnAccount) {
             System.err.println("no accounts found");
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Accounts not found, possible number = 0, by user - " + Extranet.getCurrentUserName());
         }
     }
 
@@ -89,6 +91,7 @@ public class Account {
             fw.write("0" + "\r\n" + chosenCurrency + "\r\n" + "free");
             fw.close();
             System.out.println(Message.SUCCESSACC);
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Account created by user - " + Extranet.getCurrentUserName());
         }
     }
 
@@ -116,6 +119,7 @@ public class Account {
                             writeDataInAccount("money", String.valueOf(newMoney), Extranet.getCurrentUserName(), accountNumber);
                             ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
                             System.out.println(Message.SUCCESSOPERATION);
+                        debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Imported money (" + finalmoney + currencyInAccount + ") in Account by user - " + Extranet.getCurrentUserName());
                   }
                 } else { System.err.println(Message.BIGERROR); }
             } else { System.err.println(Message.BLOCKEDACC); }
@@ -155,6 +159,7 @@ public class Account {
                             }
                             ATM.setCurrencyInATM(currencyInAccount.toUpperCase());
                             System.out.println(Message.SUCCESSOPERATION);
+                            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Withdrew money (" + moneyToWithdraw + ") in Account by user - " + Extranet.getCurrentUserName());
                             break;
                         } catch (Exception e) {
                             System.err.println(Message.WRONG + e.toString());
@@ -202,6 +207,7 @@ public class Account {
                         output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         System.out.println("Money transferred successfully!");
+                        debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Money transferred to user " + usernameToTransferMoney + " in Account by user - " + Extranet.getCurrentUserName());
                         ATM.setMoneyATM(ATM.getMoneyATM().subtract(newMoney));
                     }
                     else
