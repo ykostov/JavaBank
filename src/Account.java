@@ -66,11 +66,11 @@ public class Account {
             System.out.print("Account"+i + "=");
             List<String> accounts = Files.readAllLines(Path.of(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc"+ i + ".txt"));
             System.out.println(accounts);
-            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Accounts listed by user - " + Extranet.getCurrentUserName());
         }
+        debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Accounts listed by user - " + Extranet.getCurrentUserName());
         if (!DoesUserHaveAnAccount) {
             System.err.println("no accounts found");
-            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Accounts not found, possible number = 0, by user - " + Extranet.getCurrentUserName());
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Accounts not found, possible number = 0, by user - " + Extranet.getCurrentUserName());
         }
     }
 

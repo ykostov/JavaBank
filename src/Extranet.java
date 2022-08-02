@@ -79,7 +79,7 @@ public class Extranet {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Very bad at createDirForUserAndPassToMainMenu: " + e.getMessage());
         }
         return false;
     }
@@ -114,6 +114,7 @@ public class Extranet {
             }
             else {
                 System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-noSuccessLogin"));
+                debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: Username with password are not found in DB");
             }
         }
     }
