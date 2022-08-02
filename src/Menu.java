@@ -33,7 +33,7 @@ public class Menu {
         while(true)
         {
             System.out.println("hello admin " + Extranet.getCurrentUserName());
-            System.out.println("'block' or 'delete' or 'percent' or 'exit' an account:");
+            System.out.println("'block' or 'delete' or 'percent' or start 'debug' or 'deldebug' or 'exit' an account:");
             Scanner scan = new Scanner(System.in);
             String adminInput = scan.nextLine().toLowerCase().trim();
             if (adminInput.startsWith("bl")) {
@@ -43,6 +43,14 @@ public class Menu {
             } else if (adminInput.startsWith("per")) {
                 Admin.choosePercent();
             }
+            else if (adminInput.startsWith("deb")) {
+                debugMode.createDebugFile();
+                System.out.println(debugMode.swither() ? "it is now working":"it is now stopped");
+            }
+//            else if (adminInput.startsWith("deldeb")) {
+//                System.out.println("got here0");
+//                debugMode.delLogger();
+//            }
             else if (adminInput.startsWith("exit"))
             {
                 break;
