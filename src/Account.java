@@ -109,8 +109,10 @@ public class Account {
                     if (Double.parseDouble(moneyToImport) > ATM.getMoneyATM().doubleValue()) {
                         System.err.println(Message.MOREMONEY);
                     } else {
-
-                            BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToImport)));
+                            BigDecimal percent1 = BigDecimal.valueOf(100).subtract(BigDecimal.valueOf(Extranet.getCurrentPercent()));
+                            BigDecimal percent2 = percent1.divide(BigDecimal.valueOf(100));
+                            BigDecimal finalmoney = BigDecimal.valueOf(Double.parseDouble(moneyToImport)).multiply(percent2);
+                            BigDecimal newMoney = moneyInAccount.add(finalmoney);
                             writeDataInAccount("money", String.valueOf(newMoney), Extranet.getCurrentUserName(), accountNumber);
                             ATM.setMoneyATM(ATM.getMoneyATM().subtract(BigDecimal.valueOf(Double.parseDouble(moneyToImport))));
                             System.out.println(Message.SUCCESSOPERATION);

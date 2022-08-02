@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Admin {
 
@@ -91,14 +93,34 @@ public class Admin {
             {
                 System.out.println("bad input!! Try again");
             }
-
         }
-
-
-
-
     }
 
+    public static void choosePercent() {
+        while(true)
+        {
+            System.out.println("current percent: " + Extranet.getCurrentPercent() + "%");
+            System.out.println("Enter new percent - (only number!)");
+            String percentInput = scan.nextLine();
+            String percentRegex = "[0-9]";
+            Pattern pattern = Pattern.compile(percentRegex);
+            Matcher matcher = pattern.matcher(percentInput);
+            if (matcher.matches())
+            {
+                Extranet.setCurrentPercent(Integer.parseInt(percentInput));
+                break;
+            }
+            else if(percentInput.startsWith("exit"))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("bad input. try again");
+            }
+        }
+
+    }
 
 }
 
