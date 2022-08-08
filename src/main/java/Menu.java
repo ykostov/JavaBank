@@ -45,7 +45,7 @@ public class Menu {
             }
             else if (adminInput.startsWith("deb")) {
                 debugMode.createDebugFile();
-                System.out.println(debugMode.swither() ? "it is now working":"it is now stopped");
+                System.out.println(debugMode.switcher() ? "it is now working":"it is now stopped");
             }
 //            else if (adminInput.startsWith("deldeb")) {
 //                System.out.println("got here0");

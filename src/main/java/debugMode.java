@@ -8,7 +8,7 @@ public class debugMode {
 
     private static boolean isWorking = false;
 
-    public static boolean swither()
+    public static boolean switcher()
     {
         isWorking = !isWorking;
         return isWorking;
