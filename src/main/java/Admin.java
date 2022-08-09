@@ -9,8 +9,8 @@ public class Admin {
     private static final Scanner scan = new Scanner(System.in);
 
 
-    public static void main(Database newdb) throws IOException {
-        Database adminDb = new Database("admins");
+    public static void main(Filedb newdb) throws IOException {
+        Filedb adminDb = new Filedb("admins");
         adminDb.createDb();
         while (true)
         {

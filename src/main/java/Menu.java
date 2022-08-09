@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Menu {
     private static final Scanner scan = new Scanner(System.in);
-    public static void mainMenu(Database newdb) throws IOException {
+    public static void mainMenu(Filedb newdb) throws IOException {
 
         while(true) {
             System.out.println(Messages.getMessage("separator"));

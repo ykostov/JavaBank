@@ -36,7 +36,7 @@ public class Account {
 
     // this is the main Account method with its menu
 
-    public void openAccount(Database newdb) throws IOException {
+    public void openAccount(Filedb newdb) throws IOException {
       countAccountsCreatedForUser();
       String userInput;
       boolean tempVar = true;
@@ -180,7 +180,7 @@ public class Account {
     }
 
 
-    private void transferMoneyToAnotherUser(Database newdb) throws IOException {
+    private void transferMoneyToAnotherUser(Filedb newdb) throws IOException {
         System.out.println("money in ATM: " + ATM.getMoneyATM() + " " + ATM.getCurrencyInATM() + ". Enter how much would you want to transfer");
         String moneyToTransfer = scan.nextLine();
 
