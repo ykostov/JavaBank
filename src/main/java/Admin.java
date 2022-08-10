@@ -1,4 +1,5 @@
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,9 +10,9 @@ public class Admin {
     private static final Scanner scan = new Scanner(System.in);
 
 
-    public static void main(Database newdb) throws IOException {
-        Database adminDb = new Database("admins");
-        adminDb.createDb();
+    public static void main(Database newdb) throws IOException, SQLException {
+        Database adminDb = new Database(true);
+
         while (true)
         {
             System.out.println("Login | Register | Exit");

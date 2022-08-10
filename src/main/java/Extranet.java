@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -119,7 +120,7 @@ public class Extranet {
         }
     }
 
-    public static void register(Database newdb, boolean isAdmin) {
+    public static void register(Database newdb, boolean isAdmin) throws SQLException {
 
 
         Scanner scan = new Scanner(System.in);

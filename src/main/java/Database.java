@@ -1,117 +1,51 @@
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
+import lombok.Data;
 
-/* This class creates a Database with given by employee/admin nameOfDB
-Then, createDb() is called.
-*/
+import java.sql.SQLException;
+
 public class Database {
+    private boolean isDbFile = false;
+    private boolean isAdminDb = false;
+    private final Filedb filedb = new Filedb("users");
+    private final SqlDb sdb = new SqlDb();
 
-    private String nameOfDb;
-
-    public Database(String nameOfDb) {
-        this.nameOfDb = nameOfDb;
-    }
-
-    // this method checks if the database with the given nameOfDb variable exists.
-    // For example if nameOfDb is "example" the database requires a file called example.txt used for a simple DB.
-    // If example.txt is not found, the FileWriter creates it.
-
-    public void createDb()
+    public boolean switcher()
     {
-        try {
-            FileReader fr = new FileReader(nameOfDb + ".txt");
-            System.out.println("database exists");
-        }
-        catch (FileNotFoundException e) {
-            try
-            {
-                FileWriter fr = new FileWriter(nameOfDb + ".txt");
-                System.out.println("database created");
-            }
-            catch (Exception ex)
-            {
-                // write data to logger
-            }
-
-        }
-    }
-
-    /*
-    This method is only used when registering users.
-    By given username, passwd and email it creates a new row used to store users' identifiers.
-    All rows are saved by identical way, e.g. Username:mitkoPassword12345Emailmitko@gmail.com
-    Thus they are later used for searching.
-
-     */
-
-    public void addData(String username, String passwd, String email) {
-        String dataToBeWritten = "Username:" + username + "Password:" + passwd + "Email:" + email + "\r\n";
-
-        try {
-
-            Writer output = new FileWriter(nameOfDb + ".txt", true);
-            output.write(dataToBeWritten);
-            output.close();
-        }
-
-        catch (Exception e) {
-            e.getStackTrace();
-        }
-
-       // System.out.println("User is successfully registered");
-
-    }
-
-    // this method is used to check if username with password exists in db
-
-    public boolean checkUsernameAndPassword(String username, String passwd) {
-
-        try
-        {
-            String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd + "Email";
-            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
-
-            for (String line : lines) {
-                if (line.contains(customPatternForSearchingInDb)) {
-                    //there is a user
-                    return true;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            //write data in logger
-        }
-
-        return false;
-
+        isDbFile = !isDbFile;
+        return isDbFile;
     }
 
 
-    public boolean checkUsername(String username) {
-
-        try
-        {
-            String customPatternForSearchingInDbForUserName = "Username:" + username + "Password:";
-            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
-
-            for (String line : lines) {
-                if (line.contains(customPatternForSearchingInDbForUserName)) {
-                    //there is a user
-                    return true;
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            //write data in logger
-        }
-
-        return false;
-
+    public Database(boolean isAdminDb) throws SQLException {
+        this.isAdminDb = isAdminDb;
     }
 
+    public void addData(String username, String passwd, String email) throws SQLException
+    {
+        if (isDbFile)
+        {
+            filedb.addData(username, passwd, email);
+            return;
+        }
+        sdb.addData(username, passwd, email);
+    }
+    public boolean checkUsernameAndPassword(String username, String passwd)
+    {
+        if (isDbFile)
+        {
+            return filedb.checkUsernameAndPassword(username, passwd);
 
+        }
+        return sdb.checkUsernameAndPassword(username, passwd);
+
+    }
+    public boolean checkUsername(String username)
+    {
+        if (isDbFile)
+        {
+            return filedb.checkUsername(username);
+
+        }
+        return sdb.checkUsername(username);
+
+    }
 }
