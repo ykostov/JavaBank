@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class SqlDb implements Database{
+public class SqlDb{
 
     Connection con = DriverManager.getConnection("jdbc:sqlite:/home/spooky/Videos/sqlite/usersdb.db");
     Statement statement = con.createStatement();
@@ -9,13 +9,9 @@ public class SqlDb implements Database{
     public SqlDb() throws SQLException {
     }
 
-    @Override
-    public void createDb() {
-    }
 
-    @Override
+
     public void addData(String username, String passwd, String email) throws SQLException {
-
 
     try {
         String sql = "INSERT INTO users (name, password) VALUES ('" + username + "', '" + passwd + "');";
@@ -29,7 +25,7 @@ public class SqlDb implements Database{
 
     }
 
-    @Override
+
     public boolean checkUsernameAndPassword(String username, String passwd) {
 
         try {
@@ -46,7 +42,7 @@ public class SqlDb implements Database{
         return false;
     }
 
-    @Override
+
     public boolean checkUsername(String username) {
 
         try {

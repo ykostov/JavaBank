@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class Extranet {
         return matcher.matches();
     }
 
-    private static boolean createDirForUserAndPassToMainMenu(Filedb newdb, String usernameInput, boolean isAdmin) {
+    private static boolean createDirForUserAndPassToMainMenu(Database newdb, String usernameInput, boolean isAdmin) {
         try
         {
             // creation of new client dir.
@@ -90,7 +91,7 @@ public class Extranet {
 // System.getProperty("user.dir") is used to get the current pwd of the project.
 // Then, the user is forwarded to Menu.mainMenu(newdb) and currentUserName is assigned with user's username.
 
-    public static void login(Filedb newdb, boolean isAdmin) throws IOException {
+    public static void login(Database newdb, boolean isAdmin) throws IOException {
         String usernameInput;
         String passwdInput;
         Scanner scan = new Scanner(System.in);
@@ -119,7 +120,7 @@ public class Extranet {
         }
     }
 
-    public static void register(Filedb newdb, boolean isAdmin) {
+    public static void register(Database newdb, boolean isAdmin) throws SQLException {
 
 
         Scanner scan = new Scanner(System.in);

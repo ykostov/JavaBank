@@ -11,7 +11,7 @@ public class Messages {
         String ANSI_RESET = "\u001B[0m";
         String ANSI_GREEN = "\u001B[32m";
 
-        languages.put("en-welcome", "Welcome to JavaBank! You can login or register or exit. Натиснете lang за смяна на език");
+        languages.put("en-welcome", "Welcome to JavaBank! You can login or register or exit. You can also 'db' to change the db to file one. Натиснете lang за смяна на език");
         languages.put("en-badInput", "Got bad input. Please try again or enter 'exit'");
         languages.put("en-username", "Enter username: ");
         languages.put("en-password", "Enter password: ");

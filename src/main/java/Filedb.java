@@ -3,15 +3,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-/* This class creates a Database with given by employee/admin nameOfDB
-Then, createDb() is called.
-*/
-public class Filedb implements Database{
+public class Filedb{
 
     private String nameOfDb;
 
     public Filedb(String nameOfDb) {
         this.nameOfDb = nameOfDb;
+        createDb();
     }
 
     // this method checks if the database with the given nameOfDb variable exists.
