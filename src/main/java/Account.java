@@ -249,10 +249,10 @@ public class Account {
 
 
                 if (currencyInAccount.equals("BGN")) {
-                    System.out.println("Your money in account are in BGN. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
+                    System.out.println("Your money in account are in BGN. Would you like to exchange them to RSD? (1 BGN =" + ATM.fromBgnToRsd() + "RSD), (yes | no)");
                     if (scan.nextLine().startsWith("y")) {
                         try {
-                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(60.11));
+                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromBgnToRsd()));
                             String newCurrency = "RSD";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
@@ -263,10 +263,10 @@ public class Account {
                         }
                     }
                 } else if (currencyInAccount.equalsIgnoreCase("RSD")) {
-                    System.out.println("Your money in account are in RSD. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+                    System.out.println("Your money in account are in RSD. Would you like to exchange them to BGN? (1 RSD = " + ATM.fromRsdToBgn() + "BGN), (yes | no)");
                     if (scan.nextLine().startsWith("y")) {
                         try {
-                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(0.017));
+                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromRsdToBgn()));
                             String newCurrency = "BGN";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
                             output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);

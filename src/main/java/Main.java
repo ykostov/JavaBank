@@ -23,54 +23,15 @@ public class Main {
     public static void main(String[] args) throws IOException, SQLException {
 
 
-
-
-        // newdb.switcher();
-
-
-
         Menu.ASCII();
 
         Messages.setupMap();
         openMainMenu(newdb);
 
 
-
     }
 
-   private static void tester() throws SQLException
-   {
 
-    try {
-        Connection con = DriverManager.getConnection("jdbc:sqlite:/home/spooky/Videos/sqlite/usersdb.db");
-
-        Statement statement = con.createStatement();
-
-        String sql = "SELECT * from users";
-
-        ResultSet result = statement.executeQuery(sql);
-
-
-
-
-        while(result.next())
-        {
-
-            result.getString(1);
-
-
-        }
-        System.out.println("not created");
-
-
-
-
-    } catch (SQLException e)
-    {
-        e.printStackTrace();
-    }
-
-   }
 
     private static void chooseLanguage()
     {

@@ -60,8 +60,7 @@ public class ATM {
         }
     }
 
-    public static void exchangeMoney()
-    {
+    public static void exchangeMoney() throws IOException {
 
         if (ATM.getCurrencyInATM().equalsIgnoreCase("BGN"))
         {
@@ -69,7 +68,7 @@ public class ATM {
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
-                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(60.11));
+                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(fromBgnToRsd()));
                 ATM.setMoneyATM(newMoney);
                 ATM.setCurrencyInATM("RSD");
             }
@@ -80,7 +79,7 @@ public class ATM {
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
-                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(0.017));
+                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(fromRsdToBgn()));
                 ATM.setMoneyATM(newMoney);
                 ATM.setCurrencyInATM("BGN");
             }
@@ -91,7 +90,7 @@ public class ATM {
         }
     }
 
-    public static void fromBgnToRsd() throws IOException {
+    public static double fromBgnToRsd() throws IOException {
         String url_str = "https://api.exchangerate.host/convert?from=BGN&to=RSD";
 
         URL url = new URL(url_str);
@@ -103,10 +102,10 @@ public class ATM {
         JsonObject jsonobj = root.getAsJsonObject();
 
         String req_result = jsonobj.get("result").getAsString();
-        System.out.println(req_result);
+        return Double.parseDouble(req_result);
     }
 
-    public static void fromRsdToBgn() throws IOException {
+    public static double fromRsdToBgn() throws IOException {
         String url_str = "https://api.exchangerate.host/convert?from=RSD&to=BGN";
 
         URL url = new URL(url_str);
@@ -118,6 +117,6 @@ public class ATM {
         JsonObject jsonobj = root.getAsJsonObject();
 
         String req_result = jsonobj.get("result").getAsString();
-        System.out.println(req_result);
+        return Double.parseDouble(req_result);
     }
 }
