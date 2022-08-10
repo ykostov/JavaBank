@@ -7,7 +7,15 @@ public class Main {
 
     private static final boolean isAdmin = false;
     private static final Scanner scan = new Scanner(System.in);
-    static Database newdb = new Database(false);
+    static Database newdb;
+
+    static {
+        try {
+            newdb = new Database(false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Main() throws SQLException {
     }
