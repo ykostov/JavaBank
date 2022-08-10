@@ -29,7 +29,7 @@ public class SqlDb{
     public boolean checkUsernameAndPassword(String username, String passwd) {
 
         try {
-            String sql = "SELECT * FROM users WHERE name = '" + username + "' AND password = '" + passwd + "';";
+            String sql = "SELECT 1 FROM users WHERE name = '" + username + "' AND password = '" + passwd + "';";
             ResultSet rs = statement.executeQuery(sql);
 
             return rs.next();
@@ -46,7 +46,7 @@ public class SqlDb{
     public boolean checkUsername(String username) {
 
         try {
-            String sql = "SELECT * FROM users WHERE name = '" + username + "';";
+            String sql = "SELECT 1 FROM users WHERE name = '" + username + "';";
             ResultSet rs = statement.executeQuery(sql);
 
             return rs.next();
