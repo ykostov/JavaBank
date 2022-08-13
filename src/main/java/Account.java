@@ -193,7 +193,7 @@ public class Account {
             System.out.println("write username to transfer money from ATM");
 
             String usernameToTransferMoney = scan.nextLine();
-            if (newdb.checkUsername(usernameToTransferMoney)) {
+            if (newdb.checkUsername(usernameToTransferMoney, false)) {
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);

@@ -20,13 +20,11 @@ public class Filedb{
     {
         try {
             FileReader fr = new FileReader(nameOfDb + ".txt");
-            System.out.println("database exists");
         }
         catch (FileNotFoundException e) {
             try
             {
                 FileWriter fr = new FileWriter(nameOfDb + ".txt");
-                System.out.println("database created");
             }
             catch (Exception ex)
             {
@@ -45,12 +43,13 @@ public class Filedb{
 
      */
 
-    public void addData(String username, String passwd, String email) {
+    public void addData(String username, String passwd, String email, boolean isAdmin) {
         String dataToBeWritten = "Username:" + username + "Password:" + passwd + "Email:" + email + "\r\n";
 
         try {
-
-            Writer output = new FileWriter(nameOfDb + ".txt", true);
+            Writer output;
+            if (isAdmin) { output = new FileWriter("admins.txt", true); }
+            else { output = new FileWriter("users.txt", true);}
             output.write(dataToBeWritten);
             output.close();
         }
@@ -65,12 +64,16 @@ public class Filedb{
 
     // this method is used to check if username with password exists in db
 
-    public boolean checkUsernameAndPassword(String username, String passwd) {
+    public boolean checkUsernameAndPassword(String username, String passwd, boolean isAdmin) {
 
         try
         {
             String customPatternForSearchingInDb = "Username:" + username + "Password:" + passwd + "Email";
-            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
+            List<String> lines;
+            if (isAdmin) {lines = Files.readAllLines(Path.of("admins" + ".txt")); }
+            else { lines = Files.readAllLines(Path.of("users" + ".txt"));}
+
+
 
             for (String line : lines) {
                 if (line.contains(customPatternForSearchingInDb)) {
@@ -82,6 +85,8 @@ public class Filedb{
         catch (Exception e)
         {
             //write data in logger
+            e.getStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return false;
@@ -89,12 +94,14 @@ public class Filedb{
     }
 
 
-    public boolean checkUsername(String username) {
+    public boolean checkUsername(String username, boolean isAdmin) {
 
         try
         {
             String customPatternForSearchingInDbForUserName = "Username:" + username + "Password:";
-            List<String> lines = Files.readAllLines(Path.of(nameOfDb + ".txt"));
+            List<String> lines;
+            if (isAdmin) {lines = Files.readAllLines(Path.of("admins" + ".txt")); }
+            else { lines = Files.readAllLines(Path.of("users" + ".txt"));}
 
             for (String line : lines) {
                 if (line.contains(customPatternForSearchingInDbForUserName)) {

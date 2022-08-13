@@ -107,7 +107,7 @@ public class Extranet {
             System.out.print(Messages.getMessage(Extranet.getCurrentLanguage() + "-password"));
             passwdInput = scan.nextLine();
 
-            if (newdb.checkUsernameAndPassword(usernameInput, passwdInput)) {
+            if (newdb.checkUsernameAndPassword(usernameInput, passwdInput, isAdmin)) {
                 System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-successLogin"));
                 Extranet.setCurrentUserName(usernameInput);
 
@@ -136,10 +136,10 @@ public class Extranet {
                 if (isUsernameValid(usernameInput)) {
 
 
-                    if ((newdb.checkUsername(usernameInput))) {
+                    if ((newdb.checkUsername(usernameInput, isAdmin))) {
                         System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-taken"));
                     } else {
-                        newdb.addData(usernameInput, passwdInput, emailInput);
+                        newdb.addData(usernameInput, passwdInput, emailInput, isAdmin);
                         System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-successRegister"));
                         Extranet.setCurrentUserName(usernameInput);
                         if (createDirForUserAndPassToMainMenu(newdb, usernameInput, isAdmin)) break;

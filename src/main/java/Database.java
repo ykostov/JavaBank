@@ -19,30 +19,30 @@ public class Database {
         this.isAdminDb = isAdminDb;
     }
 
-    public void addData(String username, String passwd, String email) throws SQLException
+    public void addData(String username, String passwd, String email, boolean isAdmin) throws SQLException
     {
         if (isDbFile)
         {
-            filedb.addData(username, passwd, email);
+            filedb.addData(username, passwd, email, isAdmin);
             return;
         }
         sdb.addData(username, passwd, email);
     }
-    public boolean checkUsernameAndPassword(String username, String passwd)
+    public boolean checkUsernameAndPassword(String username, String passwd, boolean isAdmin)
     {
         if (isDbFile)
         {
-            return filedb.checkUsernameAndPassword(username, passwd);
+            return filedb.checkUsernameAndPassword(username, passwd, isAdmin);
 
         }
         return sdb.checkUsernameAndPassword(username, passwd);
 
     }
-    public boolean checkUsername(String username)
+    public boolean checkUsername(String username, boolean isAdmin)
     {
         if (isDbFile)
         {
-            return filedb.checkUsername(username);
+            return filedb.checkUsername(username, isAdmin);
 
         }
         return sdb.checkUsername(username);
