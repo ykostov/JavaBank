@@ -1,4 +1,13 @@
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Scanner;
 
 public class ATM {
@@ -51,8 +60,7 @@ public class ATM {
         }
     }
 
-    public static void exchangeMoney()
-    {
+    public static void exchangeMoney() throws IOException {
 
         if (ATM.getCurrencyInATM().equalsIgnoreCase("BGN"))
         {
@@ -60,7 +68,7 @@ public class ATM {
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
-                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(60.11));
+                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(fromBgnToRsd()));
                 ATM.setMoneyATM(newMoney);
                 ATM.setCurrencyInATM("RSD");
             }
@@ -71,7 +79,7 @@ public class ATM {
             String userInputForYes = scan.nextLine();
             if (userInputForYes.toLowerCase().startsWith("y"))
             {
-                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(0.017));
+                BigDecimal newMoney = ATM.getMoneyATM().multiply(BigDecimal.valueOf(fromRsdToBgn()));
                 ATM.setMoneyATM(newMoney);
                 ATM.setCurrencyInATM("BGN");
             }
@@ -80,5 +88,35 @@ public class ATM {
         {
             System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-noMoneyInAtm"));
         }
+    }
+
+    public static double fromBgnToRsd() throws IOException {
+        String url_str = "https://api.exchangerate.host/convert?from=BGN&to=RSD";
+
+        URL url = new URL(url_str);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        JsonParser jp = new JsonParser();
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonobj = root.getAsJsonObject();
+
+        String req_result = jsonobj.get("result").getAsString();
+        return Double.parseDouble(req_result);
+    }
+
+    public static double fromRsdToBgn() throws IOException {
+        String url_str = "https://api.exchangerate.host/convert?from=RSD&to=BGN";
+
+        URL url = new URL(url_str);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        JsonParser jp = new JsonParser();
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonobj = root.getAsJsonObject();
+
+        String req_result = jsonobj.get("result").getAsString();
+        return Double.parseDouble(req_result);
     }
 }

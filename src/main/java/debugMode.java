@@ -45,17 +45,5 @@ public class debugMode {
         }
     }
 
-    public static void delLogger() {
-        try {
-            System.out.println("got here1");
-            Writer output = new FileWriter("debugFile.txt", false);
-            output.write("");
-            output.close();
-            System.out.println("logger data deleted");
-        } catch (Exception e) {
-            debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "ERROR: at addDataToLogger: " + Arrays.toString(e.getStackTrace()));
-        }
-
-    }
 
 }

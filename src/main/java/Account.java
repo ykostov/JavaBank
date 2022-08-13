@@ -77,7 +77,7 @@ public class Account {
     // this method creates an Account /file/ in user's directory
     private void createAccount() throws IOException {
         if (fileCount >= 3) { System.err.println(Message.MAXACC);} else {
-        String chosenCurrency = "";
+        String chosenCurrency;
         while(true) {
             System.out.println(Message.ENTERCURR);
             chosenCurrency = scan.nextLine().toUpperCase().trim();
@@ -193,7 +193,7 @@ public class Account {
             System.out.println("write username to transfer money from ATM");
 
             String usernameToTransferMoney = scan.nextLine();
-            if (newdb.checkUsername(usernameToTransferMoney)) {
+            if (newdb.checkUsername(usernameToTransferMoney, false)) {
                 List<String> lines = Files.readAllLines(Path.of(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt"));
                 BigDecimal moneyInAccount = BigDecimal.valueOf(Double.parseDouble(lines.get(0)));
                 String currencyInAccount = lines.get(1);
@@ -204,7 +204,7 @@ public class Account {
 
                         BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToTransfer)));
                         Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
-                        output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
+                        output.write(newMoney + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         System.out.println("Money transferred successfully!");
                         debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Money transferred to user " + usernameToTransferMoney + " in Account by user - " + Extranet.getCurrentUserName());
@@ -249,32 +249,32 @@ public class Account {
 
 
                 if (currencyInAccount.equals("BGN")) {
-                    System.out.println("Your money in account are in BGN. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
+                    System.out.println("Your money in account are in BGN. Would you like to exchange them to RSD? (1 BGN =" + ATM.fromBgnToRsd() + "RSD), (yes | no)");
                     if (scan.nextLine().startsWith("y")) {
                         try {
-                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(60.11));
+                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromBgnToRsd()));
                             String newCurrency = "RSD";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                            output.write(newMoney + "\r\n" + newCurrency);
                             output.close();
                             System.out.println("Money successfully exchanged!");
                         } catch (Exception e) {
-                            System.out.println("Something went wrong - " + e.toString());
+                            System.out.println("Something went wrong - " + e);
                         }
                     }
                 } else if (currencyInAccount.equalsIgnoreCase("RSD")) {
-                    System.out.println("Your money in account are in RSD. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+                    System.out.println("Your money in account are in RSD. Would you like to exchange them to BGN? (1 RSD = " + ATM.fromRsdToBgn() + "BGN), (yes | no)");
                     if (scan.nextLine().startsWith("y")) {
                         try {
-                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(0.017));
+                            BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromRsdToBgn()));
                             String newCurrency = "BGN";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                            output.write(newMoney + "\r\n" + newCurrency);
                             output.close();
 
                             System.out.println("Money successfully exchanged!");
                         } catch (Exception e) {
-                            System.out.println("Something went wrong - " + e.toString());
+                            System.out.println("Something went wrong - " + e);
                         }
                     }
                 }
@@ -329,15 +329,15 @@ public class Account {
 
         switch (accountNumber) {
             case "1" -> {
-                account1.delete();
-                account2.renameTo(new File(account1.getPath()));
-                account3.renameTo(new File(account2.getPath()));
+                System.out.println(account1.delete());
+                System.out.println(account2.renameTo(new File(account1.getPath())));
+                System.out.println(account3.renameTo(new File(account2.getPath())));
             }
             case "2" -> {
-                account2.delete();
-                account3.renameTo(new File(account2.getPath()));
+                System.out.println(account2.delete());
+                System.out.println(account3.renameTo(new File(account2.getPath())));
             }
-            case "3" -> account3.delete();
+            case "3" -> System.out.println(account3.delete());
         }
     }
 

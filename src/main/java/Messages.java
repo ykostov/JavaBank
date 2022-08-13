@@ -41,8 +41,8 @@ public class Messages {
         languages.put("en-howMuchToWithdraw", "how much do you want to withdraw?");
         languages.put("en-onlyNumbers", "Please, enter only numbers");
         languages.put("en-tryAgain", "Please, try again");
-        languages.put("en-currencyInBgn", "You currency in ATM is set to BGN. You have " + ATM.getMoneyATM() + " BGN money. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
-        languages.put("en-currencyInRsd", "You currency in ATM is set to RSD. You have " + ATM.getMoneyATM() + " RSD money. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+        languages.put("en-currencyInBgn", "You currency in ATM is set to BGN. You have " + ATM.getMoneyATM() + " BGN money. Would you like to exchange them to RSD? (yes | no)");
+        languages.put("en-currencyInRsd", "You currency in ATM is set to RSD. You have " + ATM.getMoneyATM() + " RSD money. Would you like to exchange them to BGN? (yes | no)");
         languages.put("en-noMoneyInAtm", "You do not have money in ATM!");
         languages.put("separator", "---------------------------------------------------");
 
@@ -76,8 +76,8 @@ public class Messages {
         languages.put("bg-howMuchToWithdraw", "how much do you want to withdraw?");
         languages.put("bg-onlyNumbers", "Please, enter only numbers");
         languages.put("bg-tryAgain", "Please, try again");
-        languages.put("bg-currencyInBgn", "You currency in ATM is set to BGN. You have " + ATM.getMoneyATM() + " BGN money. Would you like to exchange them to RSD? (1bgn = 60.11 RSD), (yes | no)");
-        languages.put("bg-currencyInRsd", "You currency in ATM is set to RSD. You have " + ATM.getMoneyATM() + " RSD money. Would you like to exchange them to BGN? (1rsd = 0.017 bgn), (yes | no)");
+        languages.put("bg-currencyInBgn", "You currency in ATM is set to BGN. You have " + ATM.getMoneyATM() + " BGN money. Would you like to exchange them to RSD? (yes | no)");
+        languages.put("bg-currencyInRsd", "You currency in ATM is set to RSD. You have " + ATM.getMoneyATM() + " RSD money. Would you like to exchange them to BGN? (yes | no)");
         languages.put("bg-noMoneyInAtm", "You do not have money in ATM!");
 
     }

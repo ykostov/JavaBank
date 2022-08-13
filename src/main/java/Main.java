@@ -1,33 +1,22 @@
-import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-
-    private static final boolean isAdmin = false;
     private static final Scanner scan = new Scanner(System.in);
-    static Database newdb;
+
+  static Database newdb;
 
     static {
         try {
-            newdb = new Database(false);
+            newdb = new Database();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Main() throws SQLException {
-    }
 
-    public static void main(String[] args) throws IOException, SQLException {
-
-
-
-
-        // newdb.switcher();
-
-
+    public static void main(String[] args) {
 
         Menu.ASCII();
 
@@ -35,42 +24,8 @@ public class Main {
         openMainMenu(newdb);
 
 
-
     }
 
-   private static void tester() throws SQLException
-   {
-
-    try {
-        Connection con = DriverManager.getConnection("jdbc:sqlite:/home/spooky/Videos/sqlite/usersdb.db");
-
-        Statement statement = con.createStatement();
-
-        String sql = "SELECT * from users";
-
-        ResultSet result = statement.executeQuery(sql);
-
-
-
-
-        while(result.next())
-        {
-
-            result.getString(1);
-
-
-        }
-        System.out.println("not created");
-
-
-
-
-    } catch (SQLException e)
-    {
-        e.printStackTrace();
-    }
-
-   }
 
     private static void chooseLanguage()
     {
@@ -96,7 +51,7 @@ public class Main {
 
     }
 
-    private static void openMainMenu(Database newdb) throws IOException {
+    private static void openMainMenu(Database newdb) {
         while (true) {
 
             System.out.println(Messages.getMessage(Extranet.getCurrentLanguage() + "-welcome"));  // Hello World
@@ -105,10 +60,10 @@ public class Main {
 
 
                 if (userInput.toLowerCase().trim().startsWith("log")) {
-                    Extranet.login(newdb, isAdmin);
+                    Extranet.login(newdb, false);
 
                 } else if (userInput.toLowerCase().trim().startsWith("reg")) {
-                    Extranet.register(newdb, isAdmin);
+                    Extranet.register(newdb, false);
 
                 } else if (userInput.toLowerCase().trim().startsWith("admin")) {
                     Admin.main(newdb);
@@ -132,36 +87,12 @@ public class Main {
     }
 
     private static void changeDb() {
-        System.out.println(newdb.switcher());
+        if (newdb.switcher())
+        {
+            System.out.println("your db is now in File mode");
+            return;
+        }
+        System.out.println("Your db is now in SQLite mode");
     }
 
-
 }
-
-/*
- //    String sql1 = "INSERT INTO users VALUES ('baiivan', 'vanku')";
-//        String sql1 = "DELETE FROM users WHERE name = 'baiivan'";
-        String sql = "SELECT * FROM users";
-        Statement statement = con.createStatement();
-        String checker = ("SELECT 1 FROM users WHERE name = 'gosho'");
-
-//        statement.executeUpdate(sql1);
-     //   statement.executeUpdate(sql1);
-        ResultSet result = statement.executeQuery(sql);
-        ResultSet result2 = statement.executeQuery(checker);
-
-
-
-//        while(result.next())
-//        {
-//            String passwd = result2.getString("password");
-//            System.out.println("password: " + passwd);
-//        }
-
-        while(result.next())
-        {
-            String name = result.getString("name");
-            String passwd = result.getString("password");
-            System.out.println(" | " + name + " | " + passwd);
-        }
- */

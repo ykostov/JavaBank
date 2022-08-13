@@ -10,8 +10,8 @@ public class Admin {
     private static final Scanner scan = new Scanner(System.in);
 
 
-    public static void main(Database newdb) throws IOException, SQLException {
-        Database adminDb = new Database(true);
+    public static void main(Database newdb) throws SQLException {
+//        Database adminDb = new Database(true);
 
         while (true)
         {
@@ -20,10 +20,10 @@ public class Admin {
             String userInput = scan.nextLine();
             if (userInput.toLowerCase().trim().startsWith("log"))
             {
-                Extranet.login(adminDb, isAdmin);
+                Extranet.login(newdb, isAdmin);
                 break;
             } else if (userInput.toLowerCase().trim().startsWith("reg")) {
-                Extranet.register(adminDb, isAdmin);
+                Extranet.register(newdb, isAdmin);
                 break;
             } else if (userInput.toLowerCase().trim().startsWith("exit")) {
                 break;
