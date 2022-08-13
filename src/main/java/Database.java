@@ -26,7 +26,7 @@ public class Database {
             filedb.addData(username, passwd, email, isAdmin);
             return;
         }
-        sdb.addData(username, passwd, email);
+        sdb.addData(username, passwd, email, isAdmin);
     }
     public boolean checkUsernameAndPassword(String username, String passwd, boolean isAdmin)
     {
@@ -35,7 +35,7 @@ public class Database {
             return filedb.checkUsernameAndPassword(username, passwd, isAdmin);
 
         }
-        return sdb.checkUsernameAndPassword(username, passwd);
+        return sdb.checkUsernameAndPassword(username, passwd, isAdmin);
 
     }
     public boolean checkUsername(String username, boolean isAdmin)
@@ -45,7 +45,7 @@ public class Database {
             return filedb.checkUsername(username, isAdmin);
 
         }
-        return sdb.checkUsername(username);
+        return sdb.checkUsername(username, isAdmin);
 
     }
 }

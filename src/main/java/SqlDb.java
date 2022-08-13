@@ -10,16 +10,22 @@ public class SqlDb{
     }
 
 
-
-    public void addData(String username, String passwd, String email) throws SQLException {
+    public void createDb() throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS users (name STRING, password STRING, status STRING);";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.executeUpdate();
+    }
+    public void addData(String username, String passwd, String email, boolean isAdmin) throws SQLException {
+        String status = isAdmin ? "admin" : "user";
 
     try {
         //String sql = "INSERT INTO users (name, password) VALUES ('" + username + "', '" + passwd + "');";
 
-        String sql = "INSERT INTO users (name, password) VALUES (? , ?);";
+        String sql = "INSERT INTO users (name, password, status) VALUES (? , ? , ?);";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, username);
         ps.setString(2, passwd);
+        ps.setString(3, status);
 
         ps.executeUpdate();
 
@@ -33,14 +39,15 @@ public class SqlDb{
     }
 
 
-    public boolean checkUsernameAndPassword(String username, String passwd) {
-
+    public boolean checkUsernameAndPassword(String username, String passwd, boolean isAdmin) {
+        String status = isAdmin ? "admin" : "user";
         try {
-            //String sql = "SELECT 1 FROM users WHERE name = '" + username + "' AND password = '" + passwd + "';";
-            String sql = "SELECT 1 FROM users WHERE name = ? AND password = ? ;";
+
+            String sql = "SELECT 1 FROM users WHERE name = ? AND password = ? AND status = ?;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, passwd);
+            ps.setString(3, status);
 
             ResultSet rs = ps.executeQuery();
 
@@ -55,13 +62,14 @@ public class SqlDb{
     }
 
 
-    public boolean checkUsername(String username) {
+    public boolean checkUsername(String username, boolean isAdmin) {
 
         try {
-
-            String sql = "SELECT 1 FROM users WHERE name = ? ;";
+            String status = isAdmin ? "admin" : "user";
+            String sql = "SELECT 1 FROM users WHERE name = ? AND status = ? ;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
+            ps.setString(2, status);
 
             ResultSet rs = ps.executeQuery();
 
