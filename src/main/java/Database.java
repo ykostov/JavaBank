@@ -1,10 +1,7 @@
-import lombok.Data;
-
 import java.sql.SQLException;
 
 public class Database {
     private boolean isDbFile = false;
-    private boolean isAdminDb = false;
     private final Filedb filedb = new Filedb("users");
     private final SqlDb sdb = new SqlDb();
 
@@ -15,8 +12,9 @@ public class Database {
     }
 
 
-    public Database(boolean isAdminDb) throws SQLException {
-        this.isAdminDb = isAdminDb;
+    public Database() throws SQLException {
+        sdb.createDb();
+        filedb.createDb();
     }
 
     public void addData(String username, String passwd, String email, boolean isAdmin) throws SQLException

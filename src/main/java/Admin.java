@@ -10,7 +10,7 @@ public class Admin {
     private static final Scanner scan = new Scanner(System.in);
 
 
-    public static void main(Database newdb) throws IOException, SQLException {
+    public static void main(Database newdb) throws SQLException {
 //        Database adminDb = new Database(true);
 
         while (true)

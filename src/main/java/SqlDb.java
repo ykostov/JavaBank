@@ -15,7 +15,7 @@ public class SqlDb{
         PreparedStatement ps = con.prepareStatement(sql);
         ps.executeUpdate();
     }
-    public void addData(String username, String passwd, String email, boolean isAdmin) throws SQLException {
+    public void addData(String username, String passwd, String email, boolean isAdmin){
         String status = isAdmin ? "admin" : "user";
 
     try {

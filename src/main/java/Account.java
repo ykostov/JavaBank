@@ -77,7 +77,7 @@ public class Account {
     // this method creates an Account /file/ in user's directory
     private void createAccount() throws IOException {
         if (fileCount >= 3) { System.err.println(Message.MAXACC);} else {
-        String chosenCurrency = "";
+        String chosenCurrency;
         while(true) {
             System.out.println(Message.ENTERCURR);
             chosenCurrency = scan.nextLine().toUpperCase().trim();
@@ -204,7 +204,7 @@ public class Account {
 
                         BigDecimal newMoney = moneyInAccount.add(BigDecimal.valueOf(Double.parseDouble(moneyToTransfer)));
                         Writer output = new FileWriter(System.getProperty("user.dir") + "/" + usernameToTransferMoney + "/" + "acc1.txt", false);
-                        output.write(String.valueOf(newMoney) + "\r\n" + currencyInAccount.toUpperCase());
+                        output.write(newMoney + "\r\n" + currencyInAccount.toUpperCase());
                         output.close();
                         System.out.println("Money transferred successfully!");
                         debugMode.addDataToLogger(String.valueOf(java.time.LocalTime.now()), "Money transferred to user " + usernameToTransferMoney + " in Account by user - " + Extranet.getCurrentUserName());
@@ -255,11 +255,11 @@ public class Account {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromBgnToRsd()));
                             String newCurrency = "RSD";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                            output.write(newMoney + "\r\n" + newCurrency);
                             output.close();
                             System.out.println("Money successfully exchanged!");
                         } catch (Exception e) {
-                            System.out.println("Something went wrong - " + e.toString());
+                            System.out.println("Something went wrong - " + e);
                         }
                     }
                 } else if (currencyInAccount.equalsIgnoreCase("RSD")) {
@@ -269,12 +269,12 @@ public class Account {
                             BigDecimal newMoney = moneyInAccount.multiply(BigDecimal.valueOf(ATM.fromRsdToBgn()));
                             String newCurrency = "BGN";
                             Writer output = new FileWriter(System.getProperty("user.dir") + File.separator + Extranet.getCurrentUserName() + File.separator + "acc" + accountNumber + ".txt", false);
-                            output.write(String.valueOf(newMoney) + "\r\n" + newCurrency);
+                            output.write(newMoney + "\r\n" + newCurrency);
                             output.close();
 
                             System.out.println("Money successfully exchanged!");
                         } catch (Exception e) {
-                            System.out.println("Something went wrong - " + e.toString());
+                            System.out.println("Something went wrong - " + e);
                         }
                     }
                 }
@@ -329,15 +329,15 @@ public class Account {
 
         switch (accountNumber) {
             case "1" -> {
-                account1.delete();
-                account2.renameTo(new File(account1.getPath()));
-                account3.renameTo(new File(account2.getPath()));
+                System.out.println(account1.delete());
+                System.out.println(account2.renameTo(new File(account1.getPath())));
+                System.out.println(account3.renameTo(new File(account2.getPath())));
             }
             case "2" -> {
-                account2.delete();
-                account3.renameTo(new File(account2.getPath()));
+                System.out.println(account2.delete());
+                System.out.println(account3.renameTo(new File(account2.getPath())));
             }
-            case "3" -> account3.delete();
+            case "3" -> System.out.println(account3.delete());
         }
     }
 

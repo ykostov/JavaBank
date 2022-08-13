@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -91,7 +90,7 @@ public class Extranet {
 // System.getProperty("user.dir") is used to get the current pwd of the project.
 // Then, the user is forwarded to Menu.mainMenu(newdb) and currentUserName is assigned with user's username.
 
-    public static void login(Database newdb, boolean isAdmin) throws IOException {
+    public static void login(Database newdb, boolean isAdmin) {
         String usernameInput;
         String passwdInput;
         Scanner scan = new Scanner(System.in);
